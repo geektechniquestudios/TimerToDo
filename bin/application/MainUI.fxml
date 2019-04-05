@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="940.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainUIController">
+   <top>
+      <HBox style="-fx-background-color: #a4adb5;" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Timer To Do" textFill="WHITE">
+               <font>
+                  <Font name="System Bold Italic" size="21.0" />
+               </font>
+               <HBox.margin>
+                  <Insets bottom="5.0" left="15.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <JFXButton layoutX="175.0" layoutY="10.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                     <image>
+                        <Image url="@../imageAssets/minimizeIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                     <image>
+                        <Image url="@../imageAssets/maximizeIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+            <JFXButton layoutX="227.0" layoutY="10.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                     <image>
+                        <Image url="@../imageAssets/exitIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </top>
+   <left>
+      <VBox maxWidth="75.0" minWidth="75.0" prefWidth="75.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" prefHeight="75.0" prefWidth="75.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" scaleX="0.8" scaleY="0.8">
+                     <image>
+                        <Image url="@../imageAssets/toDoIcon.png" />
+                     </image>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="20.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton layoutX="10.0" layoutY="10.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" prefHeight="75.0" prefWidth="75.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imageAssets/plusButton.png" />
+                     </image>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+            <JFXButton layoutX="10.0" layoutY="85.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" prefHeight="75.0" prefWidth="75.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imageAssets/databaseIcon.png" />
+                     </image>
+                     <effect>
+                        <Bloom />
+                     </effect>
+                  </ImageView>
+               </graphic>
+               <VBox.margin>
+                  <Insets top="30.0" />
+               </VBox.margin>
+            </JFXButton>
+         </children>
+      </VBox>
+   </left>
+   <center>
+      <TableView fx:id="toDoTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <columns>
+            <TableColumn fx:id="timeDue" prefWidth="120.0" text="Time Due" />
+            <TableColumn fx:id="timeStarted" prefWidth="127.0" text="Time Started" />
+          <TableColumn fx:id="person" prefWidth="108.0" text="Person" />
+          <TableColumn fx:id="task" prefWidth="85.0" text="Task" />
+            <TableColumn fx:id="taskID" prefWidth="79.0" text="Task ID" />
+            <TableColumn fx:id="completed" text="Completed" />
+        </columns>
+         <BorderPane.margin>
+            <Insets bottom="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+      </TableView>
+   </center>
+   <right>
+      <VBox prefHeight="498.0" prefWidth="225.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" right="20.0" top="20.0" />
+         </BorderPane.margin>
+         <children>
+            <HBox>
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <Label text="Description" textFill="WHITE">
+                     <font>
+                        <Font size="24.0" />
+                     </font>
+                  </Label>
+                  <Region HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <HBox>
+               <children>
+                  <Region HBox.hgrow="ALWAYS" />
+                  <HBox maxHeight="2.0" maxWidth="210.0" minHeight="2.0" minWidth="210.0" prefHeight="2.0" prefWidth="210.0" style="-fx-background-color: white;" />
+                  <Region HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+            <Label alignment="TOP_LEFT" prefHeight="461.0" prefWidth="225.0" text="Connect to a server to see Tasks" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font size="19.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </right>
+</BorderPane>
