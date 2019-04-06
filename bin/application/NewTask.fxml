@@ -40,6 +40,9 @@
                <BorderPane.margin>
                   <Insets />
                </BorderPane.margin>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
             </VBox>
          </top>
          <bottom>

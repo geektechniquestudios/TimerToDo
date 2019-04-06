@@ -97,6 +97,8 @@ public class MainUIController implements Initializable
 		}	
 		
 		setUpSwitching();
+		toDoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		mainBorderPane.requestFocus();
 	}
 	
 	private void getSQLTable()
