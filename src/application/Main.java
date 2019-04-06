@@ -9,6 +9,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import itemPopulation.*;
 
 
 public class Main extends Application {
@@ -22,7 +23,7 @@ public class Main extends Application {
 		try 
 		{
 			//primaryStage.getIcons().add(new Image("/imageAssets/icon.png"));
-			primaryStage.setResizable(true);
+			
 			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
 	        Parent mainParent = mainLoader.load();
 	        Scene mainScene = new Scene(mainParent);
@@ -34,26 +35,27 @@ public class Main extends Application {
 			primaryStage.setScene(mainScene);
 			
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
-			
+			//primaryStage.setResizable(true); doesn't work
+			ResizeHelper.addResizeListener(primaryStage);
+
 			primaryStage.show();
-			primaryStage.setResizable(true);
 			
-			mainParent.setOnMousePressed(new EventHandler<MouseEvent>()
-			{
-	            @Override
-	            public void handle(MouseEvent event)
-	            {
-	                xOffset = event.getSceneX();
-	                yOffset = event.getSceneY();
-	            }
-	        });
+//			mainParent.setOnMousePressed(new EventHandler<MouseEvent>()
+//			{
+//	            @Override
+//	            public void handle(MouseEvent event)
+//	            {
+//	                xOffset = event.getSceneX();
+//	                yOffset = event.getSceneY();
+//	            }
+//	        });
 	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
 	        {
 	            @Override
 	            public void handle(MouseEvent event)
 	            {
-	                primaryStage.setX(event.getScreenX() - xOffset);
-	                primaryStage.setY(event.getScreenY() - yOffset);
+//	                primaryStage.setX(event.getScreenX() - xOffset);
+//	                primaryStage.setY(event.getScreenY() - yOffset);
 	                primaryStage.setOpacity(0.7f);
 	            }
 	        });
