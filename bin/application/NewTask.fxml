@@ -7,10 +7,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.NewTaskController">
    <children>
-      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #495763;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" style="-fx-background-color: #495763;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
             <VBox>
                <children>
@@ -19,7 +18,7 @@
                         <Region HBox.hgrow="ALWAYS" />
                         <Label text="Add a new task" textFill="WHITE" BorderPane.alignment="CENTER">
                            <font>
-                              <Font size="22.0" />
+                              <Font size="28.0" />
                            </font>
                         </Label>
                         <Region HBox.hgrow="ALWAYS" />
@@ -51,10 +50,102 @@
                   <Insets bottom="20.0" />
                </BorderPane.margin>
                <font>
-                  <Font name="System Bold" size="18.0" />
+                  <Font name="System Bold" size="22.0" />
                </font>
             </JFXButton>
          </bottom>
+         <right>
+            <VBox>
+               <children>
+                  <Label text="Task Description:" textFill="WHITE">
+                     <font>
+                        <Font size="23.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </Label>
+                  <JFXTextArea focusColor="WHITE" prefHeight="200.0" prefWidth="350.0" promptText="In less than 250 characters..." style="-fx-background-color: white;" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+                     <BorderPane.margin>
+                        <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                     </BorderPane.margin>
+                  </JFXTextArea>
+               </children>
+               <BorderPane.margin>
+                  <Insets bottom="25.0" left="25.0" right="50.0" top="25.0" />
+               </BorderPane.margin>
+            </VBox>
+         </right>
+         <left>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <HBox>
+                     <children>
+                        <JFXTextField focusColor="WHITE" unFocusColor="#b8c9af">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Label text=":Task Title" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="35.0" right="35.0" top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <JFXTextField focusColor="WHITE" unFocusColor="#b8c9af">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Label text=":Person" textFill="WHITE">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="15.0" left="35.0" right="35.0" top="15.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <VBox style="-fx-background-color: white; -fx-background-radius: 2em;">
+                     <children>
+                        <HBox fx:id="dateBox" layoutX="10.0" layoutY="110.0">
+                           <VBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                        <HBox fx:id="timeBox">
+                           <VBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
+                     <VBox.margin>
+                        <Insets bottom="30.0" left="50.0" right="180.0" top="20.0" />
+                     </VBox.margin>
+                  </VBox>
+               </children>
+            </VBox>
+         </left>
+         <center>
+            <VBox maxWidth="2.0" minWidth="2.0" prefWidth="2.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="25.0" />
+               </BorderPane.margin>
+            </VBox>
+         </center>
       </BorderPane>
    </children>
 </AnchorPane>

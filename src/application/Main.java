@@ -12,11 +12,8 @@ import javafx.stage.StageStyle;
 import itemPopulation.*;
 
 
-public class Main extends Application {
-	
-	private static double xOffset = 0;
-	private static double yOffset = 0;
-	
+public class Main extends Application 
+{
 	@Override
 	public void start(Stage primaryStage)
 	{
@@ -32,30 +29,21 @@ public class Main extends Application {
 	        minPaneController.setPrimaryStage(primaryStage);
 
 			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(mainScene);
 			
+			primaryStage.setScene(mainScene);
+			primaryStage.setMinWidth(1000);
+			primaryStage.setMinHeight(675);
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
-			//primaryStage.setResizable(true); doesn't work
 			ResizeHelper.addResizeListener(primaryStage);
 
 			primaryStage.show();
 			
-//			mainParent.setOnMousePressed(new EventHandler<MouseEvent>()
-//			{
-//	            @Override
-//	            public void handle(MouseEvent event)
-//	            {
-//	                xOffset = event.getSceneX();
-//	                yOffset = event.getSceneY();
-//	            }
-//	        });
 	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
 	        {
 	            @Override
 	            public void handle(MouseEvent event)
 	            {
-//	                primaryStage.setX(event.getScreenX() - xOffset);
-//	                primaryStage.setY(event.getScreenY() - yOffset);
+//	                
 	                primaryStage.setOpacity(0.7f);
 	            }
 	        });

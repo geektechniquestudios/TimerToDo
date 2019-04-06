@@ -9,7 +9,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="584.0" prefWidth="940.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainUIController">
+<BorderPane fx:id="mainBorderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="675.0" prefWidth="1000.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainUIController">
    <top>
       <HBox style="-fx-background-color: #a4adb5;" BorderPane.alignment="CENTER">
          <children>
@@ -142,10 +142,13 @@
                   <Region HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <Label alignment="TOP_LEFT" prefHeight="461.0" prefWidth="225.0" text="Connect to a server to see Tasks" textFill="WHITE" wrapText="true">
+            <Label alignment="TOP_LEFT" prefHeight="461.0" prefWidth="225.0" text="Click on a task to see the description." textFill="WHITE" wrapText="true">
                <font>
                   <Font size="19.0" />
                </font>
+               <VBox.margin>
+                  <Insets top="15.0" />
+               </VBox.margin>
             </Label>
          </children>
       </VBox>
