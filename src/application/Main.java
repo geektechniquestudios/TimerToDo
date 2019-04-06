@@ -2,13 +2,13 @@ package application;
 	
 import javafx.application.Application;
 import javafx.event.EventHandler;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import javafx.fxml.FXMLLoader;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class Main extends Application {
@@ -17,27 +17,28 @@ public class Main extends Application {
 	private static double yOffset = 0;
 	
 	@Override
-	public void start(Stage primaryStage) {
-		try {
+	public void start(Stage primaryStage)
+	{
+		try 
+		{
 			//primaryStage.getIcons().add(new Image("/imageAssets/icon.png"));
+			primaryStage.setResizable(true);
+			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
+	        Parent mainParent = mainLoader.load();
+	        Scene mainScene = new Scene(mainParent);
+			
+	        MainUIController minPaneController = (MainUIController) mainLoader.getController();
+	        minPaneController.setPrimaryStage(primaryStage);
 
-			
-			BorderPane root = (BorderPane)FXMLLoader.load(getClass().getResource("MainUI.fxml"));
-			
-			
-			
-			
-			Scene scene = new Scene(root);
-			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			primaryStage.setScene(scene);
-			
+			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			primaryStage.setScene(mainScene);
 			
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			
 			primaryStage.show();
+			primaryStage.setResizable(true);
 			
-			
-			root.setOnMousePressed(new EventHandler<MouseEvent>()
+			mainParent.setOnMousePressed(new EventHandler<MouseEvent>()
 			{
 	            @Override
 	            public void handle(MouseEvent event)
@@ -46,7 +47,7 @@ public class Main extends Application {
 	                yOffset = event.getSceneY();
 	            }
 	        });
-	        root.setOnMouseDragged(new EventHandler<MouseEvent>()
+	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
 	        {
 	            @Override
 	            public void handle(MouseEvent event)
@@ -56,22 +57,23 @@ public class Main extends Application {
 	                primaryStage.setOpacity(0.7f);
 	            }
 	        });
-	        root.setOnDragDone(e ->
+	        mainParent.setOnDragDone(e ->
 	        {
 	        	primaryStage.setOpacity(1.0f);
 	        });
-	        root.setOnMouseReleased(e ->
+	        mainParent.setOnMouseReleased(e ->
 	        {
 	        	primaryStage.setOpacity(1.0f);
 	        });
-			
-			
-		} catch(Exception e) {
+		} 
+		catch(Exception e) 
+		{
 			e.printStackTrace();
 		}
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		launch(args);
 	}
 }

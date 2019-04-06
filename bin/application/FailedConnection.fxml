@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="mainBorder" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="356.0" prefWidth="600.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.FailedConnectionController">
+   <top>
+      <HBox style="-fx-background-color: #bc7a00;" BorderPane.alignment="CENTER">
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <Label text="Server Connection Failed" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox>
+               <children>
+                  <Region VBox.vgrow="ALWAYS" />
+                  <JFXButton onAction="#exitWasHit" text=" ">
+                     <graphic>
+                        <ImageView pickOnBounds="true" preserveRatio="true" translateX="4.0">
+                           <image>
+                              <Image url="@../imageAssets/exitIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </JFXButton>
+                  <Region VBox.vgrow="ALWAYS" />
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox>
+         <children>
+            <Label text="The connection failed. Please make sure your MySQL server is running, and try again." textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
+               <font>
+                  <Font size="20.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="50.0" right="50.0" top="75.0" />
+               </HBox.margin>
+            </Label>
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <JFXButton buttonType="RAISED" onAction="#retryWasHit" style="-fx-border-color: white; -fx-border-radius: 2em;" text=" " BorderPane.alignment="CENTER">
+         <graphic>
+            <ImageView pickOnBounds="true" preserveRatio="true" translateX="3.0">
+               <image>
+                  <Image url="@../imageAssets/refreshIcon.png" />
+               </image>
+               <effect>
+                  <Bloom />
+               </effect>
+            </ImageView>
+         </graphic>
+         <BorderPane.margin>
+            <Insets bottom="60.0" />
+         </BorderPane.margin>
+      </JFXButton>
+   </bottom>
+</BorderPane>
