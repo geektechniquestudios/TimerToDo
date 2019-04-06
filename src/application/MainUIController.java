@@ -9,13 +9,24 @@ import java.sql.Statement;
 import java.util.ResourceBundle;
 
 import itemPopulation.ToDoTableItems;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /*
 insert into list_items 
@@ -55,6 +66,11 @@ public class MainUIController implements Initializable
 {
 	static boolean hasServerConnected = false;
 	private String completeString;
+	private Stage primaryStage;
+	private static double xOffset = 0;
+	private static double yOffset = 0;
+	private AnchorPane newTaskPane;
+
 	
 	@FXML private TableView<ToDoTableItems> toDoTable;
 	
@@ -65,67 +81,64 @@ public class MainUIController implements Initializable
 	@FXML private TableColumn<ToDoTableItems, String> taskID; 
 	@FXML private TableColumn<ToDoTableItems, String> completed; 
 
-	
+	@FXML private BorderPane mainBorderPane;
+	@FXML private VBox descriptionBox;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
 		setupTables();
-		//while(!hasServerConnected)
-		//{
+		while(!hasServerConnected)
+		{
 			getSQLTable();
+			
 			//try to connect to server and select all from db
 			//if failed, display message with a retry button
-		//}	
+		}	
+		
+		setUpSwitching();
 	}
 	
 	private void getSQLTable()
 	{
+		Connection someConnection = null;
+		ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
 		
-	Connection someConnection = null;
-	ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
-	
-	try
-	{
-		Class.forName("com.mysql.cj.jdbc.Driver");			
-		someConnection = DriverManager.getConnection("jdbc:mysql://localhost/todolist","root","Mitbtes1991");			
-		Statement queryToSend = someConnection.createStatement();
-
-		ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
-		
-		while(returnStatement.next())
+		try
 		{
-			System.out.println(returnStatement.getInt("completed"));
-			if(returnStatement.getInt("completed") == 1)
+			Class.forName("com.mysql.cj.jdbc.Driver");			
+			someConnection = DriverManager.getConnection("jdbc:mysql://localhost/todolist","root","Mitbtes1991");			
+			Statement queryToSend = someConnection.createStatement();
+	
+			ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
+			
+			while(returnStatement.next())
 			{
-				completeString = "completed";
-			}
-			else
-			{
-				completeString = "incomplete";
-			}
-			itemsToReturn.add(new ToDoTableItems
+				System.out.println(returnStatement.getInt("completed"));
+				if(returnStatement.getInt("completed") == 1)
+				{
+					completeString = "completed";
+				}
+				else
+				{
+					completeString = "incomplete";
+				}
+				itemsToReturn.add(new ToDoTableItems
 				(
 					returnStatement.getString("time_due"),
 					returnStatement.getString("time_started"),
 					returnStatement.getString("person"),
 					returnStatement.getString("task"),
 					returnStatement.getString("task_id"),
-					completeString//returnStatement.getBoolean("complete")
-				));
-//			System.out.print(returnStatement.getString("time_due") + " ");
-//			System.out.print(returnStatement.getString("time_started") + " ");
-//			System.out.print(returnStatement.getString("person") + " ");
-//			System.out.print(returnStatement.getString("task") + " ");
-//			System.out.print(returnStatement.getString("task_description") + " ");
-
-
-			//System.out.println(returnStatement.next());				
-		}
-		
-		toDoTable.setItems(itemsToReturn);
-		hasServerConnected = true;
+					completeString,
+					
+					returnStatement.getString("task_description")
+				));			
+			}
 			
+			toDoTable.setItems(itemsToReturn);
+			hasServerConnected = true;
+				
 		}
 		catch(SQLException e)
 		{
@@ -144,13 +157,64 @@ public class MainUIController implements Initializable
 		{
 			System.out.println("didn't work 3");
 			e.printStackTrace();
+			sqlFail();
 		}
 	}
 	
 	private void sqlFail()
 	{
-		//prompt user to make sure server is running or something 
+		Stage popupStage = new Stage();//send to failed connections controller
 		
+		try
+		{
+			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("FailedConnection.fxml"));
+			Parent rootParent = popupRoot.load();
+			Scene rootScene = new Scene(rootParent);
+			
+	        FailedConnectionController failController = (FailedConnectionController) popupRoot.getController();
+	        failController.setStage(popupStage);
+			
+			popupStage.setScene(rootScene);
+			popupStage.initStyle(StageStyle.TRANSPARENT);
+		
+			
+			
+			rootParent.setOnMousePressed(new EventHandler<MouseEvent>()
+			{
+	            @Override
+	            public void handle(MouseEvent event)
+	            {
+	                xOffset = event.getSceneX();
+	                yOffset = event.getSceneY();
+	            }
+	        });
+	        rootParent.setOnMouseDragged(new EventHandler<MouseEvent>()
+	        {
+	            @Override
+	            public void handle(MouseEvent event)
+	            {
+	                popupStage.setX(event.getScreenX() - xOffset);
+	                popupStage.setY(event.getScreenY() - yOffset);
+	                popupStage.setOpacity(0.7f);
+	            }
+	        });
+	        rootParent.setOnDragDone(e ->
+	        {
+	        	popupStage.setOpacity(1.0f);
+	        });
+	        rootParent.setOnMouseReleased(e ->
+	        {
+	        	popupStage.setOpacity(1.0f);
+	        });
+	        
+	        popupStage.showAndWait();
+			
+		}
+		catch(Exception e)
+		{
+			System.out.println("mistake");
+			sqlFail();
+		}	
 	}
 	
 	private void setupTables()
@@ -161,8 +225,63 @@ public class MainUIController implements Initializable
 		task.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("task"));
 		taskID.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("taskID"));
 		completed.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("completed"));
-
-
 	}
 	//firstTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);//all columns autosize, might remove
+	
+	private void setUpSwitching()
+	{
+		try
+		{
+			newTaskPane = (AnchorPane)FXMLLoader.load(getClass().getResource("NewTask.fxml"));
+		}
+		catch(Exception e)
+		{
+			System.out.println("another fucking test");
+		}
+	}
+	
+	public void setPrimaryStage(Stage someStage)
+	{
+		primaryStage = someStage;
+	}
+	
+	
+	
+	
+	
+	//fxml below
+	public void exitWasHit()
+	{
+		Platform.exit();
+	}
+	
+	public void maxWasHit()
+	{
+		primaryStage.setMaximized(!primaryStage.isMaximized());
+	}
+	
+	public void minWasHit()
+	{
+		primaryStage.setIconified(true);
+	}
+	
+	public void mainListWasHit()
+	{
+		//TableView mainToDo = (TableView)mainBorderPane.getCenter();
+		//mainBorderPane.setCenter(value);
+		mainBorderPane.setRight(descriptionBox);
+		mainBorderPane.setCenter(toDoTable);
+	}
+	
+	public void newTaskWasHit()
+	{
+		mainBorderPane.setRight(null);
+		mainBorderPane.setCenter(newTaskPane);
+	}
+	
+	public void settingsWasHit()
+	{
+		mainBorderPane.setRight(null);
+		mainBorderPane.setCenter(null);
+	}
 }

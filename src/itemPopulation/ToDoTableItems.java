@@ -14,6 +14,7 @@ public class ToDoTableItems
 	private SimpleStringProperty task;
 	private SimpleStringProperty taskID;
 	private SimpleStringProperty completed;
+	private SimpleStringProperty taskDescription;
 
 
 
@@ -41,6 +42,9 @@ public class ToDoTableItems
 		return completed.get();
 	}
 
+	public String getTaskDescription() {
+		return taskDescription.get();
+	}
 	
 	//Setters
 
@@ -68,6 +72,9 @@ public class ToDoTableItems
 		this.completed = completed;
 	}
 
+	public void setTaskDescription(SimpleStringProperty taskDescription) {
+		this.completed = taskDescription;
+	}
 	
 	public ToDoTableItems()
 	{
@@ -79,7 +86,7 @@ public class ToDoTableItems
 		this.completed = new SimpleStringProperty("-");
 	}
 	
-	public ToDoTableItems(String timeDue, String timeStarted, String person, String task, String taskID, String completed)
+	public ToDoTableItems(String timeDue, String timeStarted, String person, String task, String taskID, String completed, String taskDescription)
 	{
 		this.timeDue = new SimpleStringProperty(timeDue);
 		this.timeStarted = new SimpleStringProperty(timeStarted);
@@ -87,5 +94,7 @@ public class ToDoTableItems
 		this.task = new SimpleStringProperty(task);
 		this.taskID = new SimpleStringProperty(taskID);
 		this.completed = new SimpleStringProperty(completed);
+		
+		this.taskDescription = new SimpleStringProperty(taskDescription);
 	}
 }
