@@ -21,40 +21,47 @@ public class Main extends Application
 		{
 			//primaryStage.getIcons().add(new Image("/imageAssets/icon.png"));
 			
-			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
-	        Parent mainParent = mainLoader.load();
-	        Scene mainScene = new Scene(mainParent);
+//			FXMLLoader mainLoader = new FXMLLoader(getClass().getResource("MainUI.fxml"));
+//	        Parent mainParent = mainLoader.load();
+//	        Scene mainScene = new Scene(mainParent);
 			
-	        MainUIController minPaneController = (MainUIController) mainLoader.getController();
-	        minPaneController.setPrimaryStage(primaryStage);
+	        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
+	        Parent loginParent = loginLoader.load();
+	        Scene loginScene = new Scene(loginParent);
+	        
+	        LoginController login = (LoginController) loginLoader.getController();
+	        login.setStage(primaryStage);
+	        
+//	        MainUIController minPaneController = (MainUIController) mainLoader.getController();
+//	        minPaneController.setPrimaryStage(primaryStage); 
 
-			mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+			loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
-			primaryStage.setScene(mainScene);
-			primaryStage.setMinWidth(1000);
-			primaryStage.setMinHeight(675);
+			primaryStage.setScene(loginScene);
+//			primaryStage.setMinWidth(1000);
+//			primaryStage.setMinHeight(675);
 			primaryStage.initStyle(StageStyle.TRANSPARENT);
 			ResizeHelper.addResizeListener(primaryStage);
 
 			primaryStage.show();
 			
-	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
-	        {
-	            @Override
-	            public void handle(MouseEvent event)
-	            {
-//	                
-	                primaryStage.setOpacity(0.7f);
-	            }
-	        });
-	        mainParent.setOnDragDone(e ->
-	        {
-	        	primaryStage.setOpacity(1.0f);
-	        });
-	        mainParent.setOnMouseReleased(e ->
-	        {
-	        	primaryStage.setOpacity(1.0f);
-	        });
+//	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
+//	        {
+//	            @Override
+//	            public void handle(MouseEvent event)
+//	            {
+////	                
+//	                primaryStage.setOpacity(0.7f);
+//	            }
+//	        });
+//	        mainParent.setOnDragDone(e ->
+//	        {
+//	        	primaryStage.setOpacity(1.0f);
+//	        });
+//	        mainParent.setOnMouseReleased(e ->
+//	        {
+//	        	primaryStage.setOpacity(1.0f);
+//	        });
 		} 
 		catch(Exception e) 
 		{

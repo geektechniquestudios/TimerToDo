@@ -114,7 +114,7 @@
             <TableColumn fx:id="completed" text="Completed" />
         </columns>
          <BorderPane.margin>
-            <Insets bottom="20.0" right="20.0" top="20.0" />
+            <Insets bottom="10.0" right="20.0" top="20.0" />
          </BorderPane.margin>
       </TableView>
    </center>
@@ -153,4 +153,29 @@
          </children>
       </VBox>
    </right>
+   <bottom>
+      <HBox>
+         <children>
+            <JFXButton fx:id="editButton" onAction="#editButtonHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Edit Selection" textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="10.0" onAction="#deleteButtonHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Delete " textFill="WHITE">
+               <font>
+                  <Font size="18.0" />
+               </font>
+               <HBox.margin>
+                  <Insets left="15.0" right="15.0" />
+               </HBox.margin>
+            </JFXButton>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </HBox>
+   </bottom>
 </BorderPane>

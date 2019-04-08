@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import itemPopulation.ToDoTableItems;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -24,6 +26,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -65,11 +68,18 @@ create table list_items
 public class MainUIController implements Initializable
 {
 	static boolean hasServerConnected = false;
+	boolean hasLoginShown = false;
 	private String completeString;
 	private Stage primaryStage;
 	private static double xOffset = 0;
 	private static double yOffset = 0;
 	private AnchorPane newTaskPane;
+	private HBox bottomHBox;
+	private VBox bottomEditPane;
+	
+	private static String databaseAddress;
+	private static String username;
+	private static String password;
 
 	
 	@FXML private TableView<ToDoTableItems> toDoTable;
@@ -83,6 +93,8 @@ public class MainUIController implements Initializable
 
 	@FXML private BorderPane mainBorderPane;
 	@FXML private VBox descriptionBox;
+	@FXML private JFXButton editButton;
+	@FXML private JFXButton deleteButton;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -97,8 +109,13 @@ public class MainUIController implements Initializable
 		}	
 		
 		setUpSwitching();
-		toDoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-		mainBorderPane.requestFocus();
+		Platform.runLater(()->
+		{
+			mainBorderPane.requestFocus();
+		});
+		
+		bottomHBox = (HBox)mainBorderPane.getBottom();
+		setupBottomEditPane();
 	}
 	
 	private void getSQLTable()
@@ -109,7 +126,7 @@ public class MainUIController implements Initializable
 		try
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");			
-			someConnection = DriverManager.getConnection("jdbc:mysql://localhost/todolist","root","Mitbtes1991");			
+			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
 			Statement queryToSend = someConnection.createStatement();
 	
 			ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
@@ -119,7 +136,7 @@ public class MainUIController implements Initializable
 				System.out.println(returnStatement.getInt("completed"));
 				if(returnStatement.getInt("completed") == 1)
 				{
-					completeString = "completed";
+					completeString = "completed"; 
 				}
 				else
 				{
@@ -167,15 +184,42 @@ public class MainUIController implements Initializable
 	{
 		Stage popupStage = new Stage();//send to failed connections controller
 		
+//		String whichPaneToLoad;
+		
+//		if(hasLoginShown)
+//		{
+//			whichPaneToLoad = "FailedConnection.fxml";
+//		}
+//		else
+//		{
+//			whichPaneToLoad = "LoginPage.fxml";
+//		}
+//		
+		
 		try
 		{
+			
+
 			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("FailedConnection.fxml"));
 			Parent rootParent = popupRoot.load();
 			Scene rootScene = new Scene(rootParent);
 			
-	        FailedConnectionController failController = (FailedConnectionController) popupRoot.getController();
-	        failController.setStage(popupStage);
-			
+//			if(hasLoginShown)
+//			{
+				FailedConnectionController failController = (FailedConnectionController) popupRoot.getController();
+	        	failController.setStage(popupStage);
+//	    		hasLoginShown = true;
+//			}
+//			else
+//			{
+//				LoginController login = (LoginController) popupRoot.getController();
+//				login.setStage(popupStage);
+//			}
+//			else 
+//			{
+//				LoginController login = (LoginController) popupRoot.getController();
+//				
+//			}
 			popupStage.setScene(rootScene);
 			popupStage.initStyle(StageStyle.TRANSPARENT);
 		
@@ -214,8 +258,9 @@ public class MainUIController implements Initializable
 		}
 		catch(Exception e)
 		{
+			e.printStackTrace();
+			
 			System.out.println("mistake");
-			sqlFail();
 		}	
 	}
 	
@@ -227,6 +272,9 @@ public class MainUIController implements Initializable
 		task.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("task"));
 		taskID.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("taskID"));
 		completed.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("completed"));
+		
+		toDoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
 	}
 	//firstTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);//all columns autosize, might remove
 	
@@ -238,9 +286,30 @@ public class MainUIController implements Initializable
 		}
 		catch(Exception e)
 		{
-			System.out.println("another fucking test");
+			System.out.println("another test");
 		}
 	}
+	
+
+	private void setupBottomEditPane()
+	{
+		try
+		{
+			bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
+			
+//			 EditController login = (EditController) editLoader.getController();
+//		     login.setStage(primaryStage);
+
+
+		}
+		catch(Exception e)
+		{
+			System.out.println("another one");
+			e.printStackTrace();
+		}
+	}
+	
+	
 	
 	public void setPrimaryStage(Stage someStage)
 	{
@@ -248,9 +317,7 @@ public class MainUIController implements Initializable
 	}
 	
 	
-	
-	
-	
+
 	//fxml below
 	public void exitWasHit()
 	{
@@ -273,17 +340,55 @@ public class MainUIController implements Initializable
 		//mainBorderPane.setCenter(value);
 		mainBorderPane.setRight(descriptionBox);
 		mainBorderPane.setCenter(toDoTable);
+		mainBorderPane.setBottom(bottomHBox);
 	}
 	
 	public void newTaskWasHit()
 	{
 		mainBorderPane.setRight(null);
 		mainBorderPane.setCenter(newTaskPane);
+		mainBorderPane.setBottom(null);
+		
 	}
 	
 	public void settingsWasHit()
 	{
 		mainBorderPane.setRight(null);
 		mainBorderPane.setCenter(null);
+	}
+	
+	public void deleteButtonHit()
+	{
+		
+	}
+	
+	public void editButtonHit()
+	{
+//		mainBorderPane.setRight(newTaskPane);
+//		primaryStage.setWidth(1400);
+//		mainBorderPane.setCenter(newTaskPane);
+//		mainBorderPane.setBottom(null);
+		mainBorderPane.setBottom(bottomEditPane);
+	}
+	
+	
+	public static void setHasServerConnected(boolean hasIt)
+	{
+		hasServerConnected = hasIt;
+	}
+	
+	public static void setDatabaseAddress(String newDatabaseAddress)
+	{
+		databaseAddress = newDatabaseAddress;
+	}
+	
+	public static void setUsername(String someUsername)
+	{
+		username = someUsername;
+	}
+	
+	public static void setPassword(String somePassword)
+	{
+		password = somePassword;
 	}
 }

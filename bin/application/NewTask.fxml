@@ -45,12 +45,12 @@
             </VBox>
          </top>
          <bottom>
-            <JFXButton text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
+            <JFXButton style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="20.0" />
                </BorderPane.margin>
                <font>
-                  <Font name="System Bold" size="22.0" />
+                  <Font size="18.0" />
                </font>
             </JFXButton>
          </bottom>
@@ -65,7 +65,7 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXTextArea focusColor="WHITE" prefHeight="200.0" prefWidth="350.0" promptText="In less than 250 characters..." style="-fx-background-color: white;" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+                  <JFXTextArea focusColor="WHITE" prefHeight="254.0" prefWidth="306.0" promptText="In less than 250 characters..." style="-fx-background-color: white; -fx-background-radius: .8em;" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
                      <BorderPane.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </BorderPane.margin>
@@ -81,7 +81,7 @@
                <children>
                   <HBox>
                      <children>
-                        <JFXTextField focusColor="WHITE" unFocusColor="#b8c9af">
+                        <JFXTextField focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>
@@ -101,7 +101,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0">
                      <children>
-                        <JFXTextField focusColor="WHITE" unFocusColor="#b8c9af">
+                        <JFXTextField focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>
@@ -119,23 +119,41 @@
                         <Insets bottom="15.0" left="35.0" right="35.0" top="15.0" />
                      </VBox.margin>
                   </HBox>
-                  <VBox style="-fx-background-color: white; -fx-background-radius: 2em;">
+                  <HBox>
                      <children>
-                        <HBox fx:id="dateBox" layoutX="10.0" layoutY="110.0">
+                        <VBox style="-fx-background-color: white; -fx-background-radius: .8em;">
+                           <children>
+                              <HBox fx:id="dateBox" layoutX="10.0" layoutY="110.0">
+                                 <VBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                 </VBox.margin>
+                              </HBox>
+                              <HBox fx:id="timeBox">
+                                 <VBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                                 </VBox.margin>
+                              </HBox>
+                           </children>
                            <VBox.margin>
-                              <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+                              <Insets bottom="30.0" left="60.0" right="180.0" top="20.0" />
                            </VBox.margin>
-                        </HBox>
-                        <HBox fx:id="timeBox">
-                           <VBox.margin>
+                           <HBox.margin>
+                              <Insets left="60.0" right="25.0" />
+                           </HBox.margin>
+                        </VBox>
+                        <Label text=":Complete by" textFill="WHITE">
+                           <font>
+                              <Font size="23.0" />
+                           </font>
+                           <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
-                           </VBox.margin>
-                        </HBox>
+                           </HBox.margin>
+                        </Label>
                      </children>
                      <VBox.margin>
-                        <Insets bottom="30.0" left="50.0" right="180.0" top="20.0" />
+                        <Insets top="30.0" />
                      </VBox.margin>
-                  </VBox>
+                  </HBox>
                </children>
             </VBox>
          </left>
