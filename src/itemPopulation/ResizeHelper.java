@@ -10,6 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 
+
+//found this amazing nugget on stackOverflow, designed by multiple people
 public class ResizeHelper {
 
     public static void addResizeListener(Stage stage) {

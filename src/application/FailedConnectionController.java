@@ -2,6 +2,11 @@ package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextField;
+
+import itemPopulation.ResizeHelper;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -12,10 +17,17 @@ public class FailedConnectionController implements Initializable
 {
 	private Stage thisStage;
 	@FXML private BorderPane mainBorder;
+	@FXML private JFXTextField addressField;
+	@FXML private JFXTextField nameField;
+	@FXML private JFXPasswordField pwField;
 
 	public void retryWasHit()
 	{
-		thisStage.close();
+		MainUIController.setDatabaseAddress(addressField.getText());
+		MainUIController.setUsername(nameField.getText());
+		MainUIController.setPassword(pwField.getText());
+		
+		thisStage.close();	
 	}
 	
 	public void exitWasHit()
@@ -32,11 +44,11 @@ public class FailedConnectionController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
+		//ResizeHelper.addResizeListener(thisStage);
 		Platform.runLater(() ->
 		{
 			mainBorder.requestFocus();
 
 		});
 	}
-	
 }

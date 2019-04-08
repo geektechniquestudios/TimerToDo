@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="527.0" prefWidth="834.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.LoginController">
+   <top>
+      <HBox style="-fx-background-color: #4b8c6b;" BorderPane.alignment="CENTER">
+         <children>
+            <Region layoutX="289.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
+            <Label text="Connect to the Server" textFill="WHITE">
+               <font>
+                  <Font size="29.0" />
+               </font>
+            </Label>
+            <Region HBox.hgrow="ALWAYS" />
+            <JFXButton onAction="#exitWasHit" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imageAssets/exitIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
+         </children>
+      </HBox>
+   </top>
+   <center>
+      <HBox>
+         <children>
+            <Region HBox.hgrow="ALWAYS" />
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <Region VBox.vgrow="ALWAYS" />
+                  <HBox>
+                     <children>
+                        <Region minWidth="50.0" HBox.hgrow="NEVER" />
+                        <JFXTextField fx:id="addressField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" text="//localhost/todolist" unFocusColor="#4b8c6b">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="75.0" top="25.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Label text="Database Address" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="60.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                     <VBox.margin>
+                        <Insets top="20.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="10.0">
+                     <children>
+                        <Region minWidth="50.0" HBox.hgrow="NEVER" />
+                        <JFXTextField fx:id="nameField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" text="root" unFocusColor="#4b8c6b">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="75.0" top="25.0" />
+                           </HBox.margin>
+                        </JFXTextField>
+                        <Label text="Username" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="60.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <HBox layoutX="10.0" layoutY="110.0">
+                     <children>
+                        <Region minWidth="50.0" HBox.hgrow="NEVER" />
+                        <JFXPasswordField fx:id="pwField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" unFocusColor="#4b8c6b">
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="25.0" right="75.0" top="25.0" />
+                           </HBox.margin>
+                        </JFXPasswordField>
+                        <Label text="Password" textFill="WHITE">
+                           <font>
+                              <Font size="19.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets bottom="25.0" left="60.0" right="25.0" top="25.0" />
+                           </HBox.margin>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+                  <Region layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS" />
+               </children>
+            </VBox>
+            <Region HBox.hgrow="ALWAYS" />
+         </children>
+      </HBox>
+   </center>
+   <bottom>
+      <JFXButton onAction="#submitWasHit" scaleX="0.7" scaleY="0.7" style="-fx-border-color: white; -fx-border-radius: .5em;" text=" " BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="25.0" />
+         </BorderPane.margin>
+         <graphic>
+            <ImageView pickOnBounds="true" preserveRatio="true" scaleX="0.9" scaleY="0.9">
+               <image>
+                  <Image url="@../imageAssets/loginIcon.png" />
+               </image>
+               <effect>
+                  <Bloom />
+               </effect>
+            </ImageView>
+         </graphic>
+      </JFXButton>
+   </bottom>
+</BorderPane>
