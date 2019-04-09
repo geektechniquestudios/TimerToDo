@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import itemPopulation.ResizeHelper;
 import itemPopulation.ToDoTableItems;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
@@ -222,25 +223,25 @@ public class MainUIController implements Initializable
 //			}
 			popupStage.setScene(rootScene);
 			popupStage.initStyle(StageStyle.TRANSPARENT);
-		
+			ResizeHelper.addResizeListener(popupStage);
 			
 			
-			rootParent.setOnMousePressed(new EventHandler<MouseEvent>()
-			{
-	            @Override
-	            public void handle(MouseEvent event)
-	            {
-	                xOffset = event.getSceneX();
-	                yOffset = event.getSceneY();
-	            }
-	        });
+//			rootParent.setOnMousePressed(new EventHandler<MouseEvent>()
+//			{
+//	            @Override
+//	            public void handle(MouseEvent event)
+//	            {
+//	                xOffset = event.getSceneX();
+//	                yOffset = event.getSceneY();
+//	            }
+//	        });
 	        rootParent.setOnMouseDragged(new EventHandler<MouseEvent>()
 	        {
 	            @Override
 	            public void handle(MouseEvent event)
 	            {
-	                popupStage.setX(event.getScreenX() - xOffset);
-	                popupStage.setY(event.getScreenY() - yOffset);
+//	                popupStage.setX(event.getScreenX() - xOffset);
+//	                popupStage.setY(event.getScreenY() - yOffset);
 	                popupStage.setOpacity(0.7f);
 	            }
 	        });
@@ -282,7 +283,19 @@ public class MainUIController implements Initializable
 	{
 		try
 		{
-			newTaskPane = (AnchorPane)FXMLLoader.load(getClass().getResource("NewTask.fxml"));
+			//newTaskPane = (AnchorPane)FXMLLoader.load(getClass().getResource("NewTask.fxml"));
+			FXMLLoader newTaskLoader = new FXMLLoader(getClass().getResource("NewTask.fxml"));
+			Parent newTaskParent = newTaskLoader.load();
+			
+			newTaskPane = (AnchorPane)newTaskParent;
+			
+			NewTaskController task = (NewTaskController)newTaskLoader.getController();
+			task.setDatabaseAddress(databaseAddress);
+			task.setUsername(username);
+			task.setPassword(password);
+			task.setToDoTable(toDoTable);
+			
+			// pass current instance to edit controller 
 		}
 		catch(Exception e)
 		{
@@ -295,10 +308,16 @@ public class MainUIController implements Initializable
 	{
 		try
 		{
-			bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
+			//bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
+			FXMLLoader editLoader = new FXMLLoader(getClass().getResource("EditData.fxml"));
+			Parent editParent = editLoader.load();
+//			Scene editScene = new Scene(editParent);
 			
-//			 EditController login = (EditController) editLoader.getController();
-//		     login.setStage(primaryStage);
+			bottomEditPane = (VBox)editParent;
+			
+			EditController login = (EditController) editLoader.getController();
+			login.setMainUIController(this);
+//		    login.setStage(primaryStage);
 
 
 		}
@@ -355,6 +374,7 @@ public class MainUIController implements Initializable
 	{
 		mainBorderPane.setRight(null);
 		mainBorderPane.setCenter(null);
+		mainBorderPane.setBottom(null);
 	}
 	
 	public void deleteButtonHit()
@@ -369,8 +389,13 @@ public class MainUIController implements Initializable
 //		mainBorderPane.setCenter(newTaskPane);
 //		mainBorderPane.setBottom(null);
 		mainBorderPane.setBottom(bottomEditPane);
+		mainBorderPane.requestFocus();
 	}
 	
+	public void completeButtonHit()
+	{
+		
+	}
 	
 	public static void setHasServerConnected(boolean hasIt)
 	{
