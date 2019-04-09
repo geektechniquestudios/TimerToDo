@@ -283,6 +283,7 @@ public class MainUIController implements Initializable
 		try
 		{
 			newTaskPane = (AnchorPane)FXMLLoader.load(getClass().getResource("NewTask.fxml"));
+			// pass current instance to edit controller 
 		}
 		catch(Exception e)
 		{
@@ -295,9 +296,15 @@ public class MainUIController implements Initializable
 	{
 		try
 		{
-			bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
+			//bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
+			FXMLLoader editLoader = new FXMLLoader(getClass().getResource("EditData.fxml"));
+			Parent editParent = editLoader.load();
+//			Scene editScene = new Scene(editParent);
 			
-//			 EditController login = (EditController) editLoader.getController();
+			bottomEditPane = (VBox)editParent;
+			
+			 EditController login = (EditController) editLoader.getController();
+			 login.setMainUIController(this);
 //		     login.setStage(primaryStage);
 
 
@@ -369,6 +376,7 @@ public class MainUIController implements Initializable
 //		mainBorderPane.setCenter(newTaskPane);
 //		mainBorderPane.setBottom(null);
 		mainBorderPane.setBottom(bottomEditPane);
+		mainBorderPane.requestFocus();
 	}
 	
 	

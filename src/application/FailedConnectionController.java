@@ -8,6 +8,8 @@ import com.jfoenix.controls.JFXTextField;
 
 import itemPopulation.ResizeHelper;
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
@@ -39,7 +41,12 @@ public class FailedConnectionController implements Initializable
 	public void setStage(Stage someStage)
 	{
 		thisStage = someStage;
-	}
+	} 
+	
+	EventHandler<ActionEvent> addResourceHandler = event -> 
+	{
+	    retryWasHit();
+	};
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -50,5 +57,10 @@ public class FailedConnectionController implements Initializable
 			mainBorder.requestFocus();
 
 		});
+		
+		pwField.setOnAction(addResourceHandler);
+		nameField.setOnAction(addResourceHandler);
+		addressField.setOnAction(addResourceHandler);
+	
 	}
 }

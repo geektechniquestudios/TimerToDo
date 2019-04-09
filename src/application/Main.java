@@ -33,7 +33,7 @@ public class Main extends Application
 	        login.setStage(primaryStage);
 	        
 //	        MainUIController minPaneController = (MainUIController) mainLoader.getController();
-//	        minPaneController.setPrimaryStage(primaryStage); 
+//	        minPaneController.setPrimaryStage(primaryStage); 	
 
 			loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
