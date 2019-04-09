@@ -45,7 +45,7 @@
             </VBox>
          </top>
          <bottom>
-            <JFXButton style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
+            <JFXButton onAction="#submitWasHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="20.0" />
                </BorderPane.margin>
@@ -65,7 +65,7 @@
                         <Insets bottom="20.0" />
                      </VBox.margin>
                   </Label>
-                  <JFXTextArea focusColor="WHITE" prefHeight="254.0" prefWidth="306.0" promptText="In less than 250 characters..." style="-fx-background-color: white; -fx-background-radius: .8em;" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
+                  <JFXTextArea fx:id="descriptionField" focusColor="WHITE" prefHeight="254.0" prefWidth="306.0" promptText="In less than 250 characters..." style="-fx-background-color: white; -fx-background-radius: .8em;" BorderPane.alignment="CENTER" VBox.vgrow="ALWAYS">
                      <BorderPane.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </BorderPane.margin>
@@ -81,7 +81,7 @@
                <children>
                   <HBox>
                      <children>
-                        <JFXTextField focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
+                        <JFXTextField fx:id="taskField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>
@@ -101,7 +101,7 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="10.0">
                      <children>
-                        <JFXTextField focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
+                        <JFXTextField fx:id="personField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .3em;" unFocusColor="#b8c9af">
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>

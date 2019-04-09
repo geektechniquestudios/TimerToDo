@@ -45,23 +45,23 @@ public class Main extends Application
 
 			primaryStage.show();
 			
-//	        mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
-//	        {
-//	            @Override
-//	            public void handle(MouseEvent event)
-//	            {
-////	                
-//	                primaryStage.setOpacity(0.7f);
-//	            }
-//	        });
-//	        mainParent.setOnDragDone(e ->
-//	        {
-//	        	primaryStage.setOpacity(1.0f);
-//	        });
-//	        mainParent.setOnMouseReleased(e ->
-//	        {
-//	        	primaryStage.setOpacity(1.0f);
-//	        });
+	        loginParent.setOnMouseDragged(new EventHandler<MouseEvent>()
+	        {
+	            @Override
+	            public void handle(MouseEvent event)
+	            {
+                
+	                primaryStage.setOpacity(0.7f);
+	            }
+	        });
+	        loginParent.setOnDragDone(e ->
+	        {
+	        	primaryStage.setOpacity(1.0f);
+	        });
+	        loginParent.setOnMouseReleased(e ->
+	        {
+	        	primaryStage.setOpacity(1.0f);
+	        });
 		} 
 		catch(Exception e) 
 		{
