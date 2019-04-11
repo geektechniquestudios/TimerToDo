@@ -1,6 +1,10 @@
 package application;
 
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
@@ -12,6 +16,7 @@ import com.jfoenix.controls.JFXTimePicker;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 
@@ -25,6 +30,13 @@ public class EditController implements Initializable
 	private JFXTimePicker timePicker;
 	private JFXDatePicker datePicker;
 	private MainUIController mainController;
+	
+	private String databaseAddress;
+	private String username;
+	private String password;
+	
+	private static String taskNumber;
+	private Label descriptionLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -40,7 +52,52 @@ public class EditController implements Initializable
 	
 	public void submitHit()
 	{
-		//MainUIController.mainListWasHit();
+		Connection  someConnection = null;
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");			
+			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+			Statement queryToSend = someConnection.createStatement();
+	
+			//System.out.println
+			queryToSend.executeUpdate
+			(			
+				"update list_items " 																		+
+					"set time_due = \'" + datePicker.getValue() + " " + timePicker.getValue() + ":00\', "   +		
+					"person  = \"" + editPerson.getText() + "\", " 											+
+					"task = \"" + editTask.getText() + "\", " 												+
+					"task_description = \"" + editDescription.getText() + "\" "								+
+				"where task_id = " + taskNumber + ";"
+			);
+			
+		
+			//@todo: if no exception, success window popup, if catch, error window.
+			//updateTable();//then make the main table update
+			datePicker.setValue(null);//clear fields
+			timePicker.setValue(null);
+			editPerson.setText(null);
+			editTask.setText(null);
+			editDescription.setText(null);
+			
+			descriptionLabel.setText("");
+			
+				
+		}
+		catch(SQLException e)
+		{
+			System.out.println("didn't work");
+			e.printStackTrace();			
+		} 
+		catch (ClassNotFoundException e) {
+			System.out.println("didn't work 2");
+			e.printStackTrace();
+		}
+		
+		
+		
+		
+		mainController.getSQLTable();
 	}
 	
 	public void cancelHit()
@@ -83,4 +140,28 @@ public class EditController implements Initializable
 		datePicker.setValue(someDate);
 	}
 	
+	public static void setTaskNum(String someNumber)
+	{
+		taskNumber = someNumber;
+	}
+	
+	public void setDatabaseAddress(String newDatabaseAddress)
+	{
+		databaseAddress = newDatabaseAddress;
+	}
+	
+	public void setUsername(String someUsername)
+	{
+		username = someUsername;
+	}
+	
+	public void setPassword(String somePassword)
+	{
+		password = somePassword;
+	}
+	
+	public void setDescriptionLabel(Label someLabel)
+	{
+		descriptionLabel = someLabel;
+	}
 }
