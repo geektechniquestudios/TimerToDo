@@ -6,6 +6,14 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -21,6 +29,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -72,16 +81,17 @@ public class MainUIController implements Initializable
 	boolean hasLoginShown = false;
 	private String completeString;
 	private Stage primaryStage;
-	private static double xOffset = 0;
-	private static double yOffset = 0;
 	private AnchorPane newTaskPane;
 	private HBox bottomHBox;
 	private VBox bottomEditPane;
+	private String lastRowClicked;
+	private String lastDescriptionClicked;
 	
 	private static String databaseAddress;
 	private static String username;
 	private static String password;
 
+	private EditController login;
 	
 	@FXML private TableView<ToDoTableItems> toDoTable;
 	
@@ -96,6 +106,7 @@ public class MainUIController implements Initializable
 	@FXML private VBox descriptionBox;
 	@FXML private JFXButton editButton;
 	@FXML private JFXButton deleteButton;
+	@FXML private Label descriptionLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -315,7 +326,7 @@ public class MainUIController implements Initializable
 			
 			bottomEditPane = (VBox)editParent;
 			
-			EditController login = (EditController) editLoader.getController();
+			login = (EditController) editLoader.getController();
 			login.setMainUIController(this);
 //		    login.setStage(primaryStage);
 
@@ -379,7 +390,40 @@ public class MainUIController implements Initializable
 	
 	public void deleteButtonHit()
 	{
+		Connection someConnection = null;
 		
+		String deleteQuery =  "delete from list_items where task_id = " + lastRowClicked; 
+		
+				//"delete from 'list_items' where 'task_id' = lastRowClicked;
+
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");			
+			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+			Statement queryToSend = someConnection.createStatement();
+	
+			queryToSend.executeUpdate(deleteQuery);
+			
+			//update todotable
+			getSQLTable();
+		
+		}
+		catch(SQLException e)
+		{
+			System.out.println("didn't work");
+			e.printStackTrace();
+			
+		}	
+		catch(ClassNotFoundException e)
+		{
+			System.out.println("didn't work 2");
+			e.printStackTrace();
+		}
+		catch(Exception e)
+		{
+			System.out.println("didn't work 3");
+			e.printStackTrace();
+		}
 	}
 	
 	public void editButtonHit()
@@ -395,6 +439,42 @@ public class MainUIController implements Initializable
 	public void completeButtonHit()
 	{
 		
+	}
+	
+	public void tableWasHit()
+	{
+		System.out.println(toDoTable.getSelectionModel().getSelectedItem().getTimeDue());
+		String lastPersonClicked = toDoTable.getSelectionModel().getSelectedItem().getPerson(); 
+		String lastTaskClicked = toDoTable.getSelectionModel().getSelectedItem().getTask();
+		String lastTimeDueClicked = toDoTable.getSelectionModel().getSelectedItem().getTimeDue();
+		
+		lastRowClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskID();
+		lastDescriptionClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskDescription();
+		descriptionLabel.setText(lastDescriptionClicked);
+		
+		login.setDescription(lastDescriptionClicked);
+		login.setPerson(lastPersonClicked);
+		login.setTask(lastTaskClicked);
+		
+		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-yyyy");
+		
+		LocalDate dateToPass = LocalDate.parse(lastTimeDueClicked.substring(0, 10));
+		LocalTime timeToPass = LocalTime.parse(lastTimeDueClicked.substring(11, 19));
+
+		//DateFormat format = new SimpleDateFormat("hh:mm:ss");
+		
+//		DateTimeFormatter f2 = DateTimeFormatter.ofPattern("hh:mm:ss");
+//		TemporalAccessor temporalAccessor = 06.parse(lastTimeDueClicked.substring(12, 19));
+//		LocalTime t = temporalAccessor.query(LocalTime::from);
+		
+		
+		login.setDatePicker(dateToPass);
+		login.setTimePicker(timeToPass);
+		//EditController.setDatePicker();
+		//EditController.setDescription(lastDescriptionClicked);
+		//"delete from 'list_items' where 'task_id' = lastRowClicked;
+		
+		//System.out.println(toDoTable.getSelectionModel().getSelectedIndex());
 	}
 	
 	public static void setHasServerConnected(boolean hasIt)
