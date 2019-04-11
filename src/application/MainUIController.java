@@ -130,7 +130,7 @@ public class MainUIController implements Initializable
 		setupBottomEditPane();
 	}
 	
-	private void getSQLTable()
+	public void getSQLTable()
 	{
 		Connection someConnection = null;
 		ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
@@ -192,7 +192,7 @@ public class MainUIController implements Initializable
 		}
 	}
 	
-	private void sqlFail()
+	private void sqlFail()//@todo: make a bool for once the user has logged in. If they have, show "there was a problem" dialog
 	{
 		Stage popupStage = new Stage();//send to failed connections controller
 		
@@ -328,6 +328,10 @@ public class MainUIController implements Initializable
 			
 			login = (EditController) editLoader.getController();
 			login.setMainUIController(this);
+			login.setDatabaseAddress(databaseAddress);
+			login.setUsername(username);
+			login.setPassword(password);
+			login.setDescriptionLabel(descriptionLabel);
 //		    login.setStage(primaryStage);
 
 
@@ -406,6 +410,7 @@ public class MainUIController implements Initializable
 			
 			//update todotable
 			getSQLTable();
+			descriptionLabel.setText("");
 		
 		}
 		catch(SQLException e)
@@ -455,6 +460,8 @@ public class MainUIController implements Initializable
 		login.setDescription(lastDescriptionClicked);
 		login.setPerson(lastPersonClicked);
 		login.setTask(lastTaskClicked);
+		EditController.setTaskNum(lastRowClicked);
+		
 		
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-yyyy");
 		
@@ -496,4 +503,6 @@ public class MainUIController implements Initializable
 	{
 		password = somePassword;
 	}
+	
+
 }

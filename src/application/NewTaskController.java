@@ -61,8 +61,7 @@ public class NewTaskController implements Initializable
 	{
 		System.out.println(datePicker.getValue() + " " + timePicker.getValue());
 		System.out.println
-		(
-		
+		(	
 				"insert into list_items" 															+
 						"("																			+
 							"time_due," 															+
@@ -111,7 +110,7 @@ public class NewTaskController implements Initializable
 				");"
 			);
 			
-			//if no exception, success window popup, if catch, error window.
+			//@todo: if no exception, success window popup, if catch, error window.
 			updateTable();//then make the main table update
 			datePicker.setValue(null);//clear fields
 			timePicker.setValue(null);
