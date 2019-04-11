@@ -104,7 +104,7 @@
       </VBox>
    </left>
    <center>
-      <TableView fx:id="toDoTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <TableView fx:id="toDoTable" onContextMenuRequested="#tableWasHit" onMouseClicked="#tableWasHit" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
             <TableColumn fx:id="timeDue" prefWidth="120.0" text="Time Due" />
             <TableColumn fx:id="timeStarted" prefWidth="127.0" text="Time Started" />
@@ -142,7 +142,7 @@
                   <Region HBox.hgrow="ALWAYS" />
                </children>
             </HBox>
-            <Label alignment="TOP_LEFT" prefHeight="461.0" prefWidth="225.0" text="Click on a task to see the description." textFill="WHITE" wrapText="true">
+            <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="461.0" prefWidth="225.0" text="Click on a task to see the description." textFill="WHITE" wrapText="true">
                <font>
                   <Font size="19.0" />
                </font>

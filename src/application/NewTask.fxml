@@ -69,6 +69,9 @@
                      <BorderPane.margin>
                         <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                      </BorderPane.margin>
+                     <font>
+                        <Font size="15.0" />
+                     </font>
                   </JFXTextArea>
                </children>
                <BorderPane.margin>
@@ -85,6 +88,9 @@
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </JFXTextField>
                         <Label text=":Task Title" textFill="WHITE">
                            <HBox.margin>
@@ -105,6 +111,9 @@
                            <HBox.margin>
                               <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
                            </HBox.margin>
+                           <font>
+                              <Font size="15.0" />
+                           </font>
                         </JFXTextField>
                         <Label text=":Person" textFill="WHITE">
                            <HBox.margin>

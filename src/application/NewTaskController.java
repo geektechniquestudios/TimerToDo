@@ -190,6 +190,7 @@ public class NewTaskController implements Initializable
 		}
 	}
 	
+	
 	public void setDatabaseAddress(String newDatabaseAddress)
 	{
 		databaseAddress = newDatabaseAddress;
