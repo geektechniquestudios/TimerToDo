@@ -119,7 +119,6 @@ public class EditController implements Initializable
 	
 	public void setDescription(String someText)
 	{
-		System.out.println("method fires");
 		editDescription.setText(someText);
 	}
 	
