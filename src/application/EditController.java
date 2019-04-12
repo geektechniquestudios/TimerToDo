@@ -50,6 +50,7 @@ public class EditController implements Initializable
 		timeBorderPane.setLeft(datePicker);		
 	}
 	
+	
 	public void submitHit()
 	{
 		Connection  someConnection = null;
