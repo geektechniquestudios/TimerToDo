@@ -99,6 +99,8 @@ public class EditController implements Initializable
 		
 		
 		mainController.getSQLTable();
+		mainController.highlightIndex();
+		
 	}
 	
 	public void cancelHit()
