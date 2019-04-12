@@ -34,8 +34,9 @@ public class FailedConnectionController implements Initializable
 	
 	public void exitWasHit()
 	{
-		thisStage.close();
-		System.exit(0);//Platform.exit(); didn't work, this throws fatal error. Def a better way
+		//thisStage.close();
+		Platform.exit();
+		//System.exit(0);//Platform.exit(); didn't work, this throws fatal error. Def a better way
 	}
 
 	public void setStage(Stage someStage)
