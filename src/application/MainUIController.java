@@ -91,7 +91,7 @@ public class MainUIController implements Initializable
 	private static String username;
 	private static String password;
 	
-
+	private int lastIndex;
 	private EditController login;
 	
 	@FXML private TableView<ToDoTableItems> toDoTable;
@@ -463,6 +463,8 @@ public class MainUIController implements Initializable
 		login.setTask(lastTaskClicked);
 		EditController.setTaskNum(lastRowClicked);
 		
+		lastIndex = toDoTable.getSelectionModel().getSelectedIndex();
+		
 		
 		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-yyyy");
 		
@@ -515,7 +517,6 @@ public class MainUIController implements Initializable
 				"where task_id = " + lastRowClicked + ";"
 			);
 			
-		
 			//@todo: if no exception, success window popup, if catch, error window.
 
 			
@@ -532,6 +533,17 @@ public class MainUIController implements Initializable
 		}
 		
 		getSQLTable();
+		highlightIndex();
+
+	}
+	
+	public void highlightIndex()
+	{
+		Platform.runLater(() ->
+		{
+			toDoTable.getSelectionModel().select(lastIndex);//Integer.parseInt(lastRowClicked));
+			//toDoTable.getSelectionModel().selectedItemProperty();
+		});
 	}
 	
 	public static void setHasServerConnected(boolean hasIt)
