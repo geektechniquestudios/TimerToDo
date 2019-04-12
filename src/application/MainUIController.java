@@ -90,6 +90,7 @@ public class MainUIController implements Initializable
 	private static String databaseAddress;
 	private static String username;
 	private static String password;
+	
 
 	private EditController login;
 	
@@ -482,6 +483,55 @@ public class MainUIController implements Initializable
 		//"delete from 'list_items' where 'task_id' = lastRowClicked;
 		
 		//System.out.println(toDoTable.getSelectionModel().getSelectedIndex());
+	}
+	
+	public void markComplete()//@todo
+	{
+		int isComplete;
+		
+		System.out.println(toDoTable.getSelectionModel().getSelectedItem().getCompleted());
+		if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
+		{
+			isComplete = 1;
+		}
+		else
+		{
+			isComplete = 0;
+		}
+		
+		Connection  someConnection = null;
+		
+		try
+		{
+			Class.forName("com.mysql.cj.jdbc.Driver");			
+			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+			Statement queryToSend = someConnection.createStatement();
+	
+			//System.out.println
+			queryToSend.executeUpdate
+			(			
+				"update list_items " 																		+
+					"set completed = \"" + isComplete + "\" "												+
+				"where task_id = " + lastRowClicked + ";"
+			);
+			
+		
+			//@todo: if no exception, success window popup, if catch, error window.
+
+			
+				
+		}
+		catch(SQLException e)
+		{
+			System.out.println("didn't work");
+			e.printStackTrace();			
+		} 
+		catch (ClassNotFoundException e) {
+			System.out.println("didn't work 2");
+			e.printStackTrace();
+		}
+		
+		getSQLTable();
 	}
 	
 	public static void setHasServerConnected(boolean hasIt)

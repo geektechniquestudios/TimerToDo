@@ -164,7 +164,7 @@
                   <Insets left="15.0" right="15.0" />
                </HBox.margin>
             </JFXButton>
-            <JFXButton layoutX="25.0" layoutY="10.0" onAction="#completeButtonHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Mark Complete" textFill="WHITE">
+            <JFXButton layoutX="25.0" layoutY="10.0" onAction="#markComplete" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Mark Complete" textFill="WHITE">
                <font>
                   <Font size="18.0" />
                </font>
