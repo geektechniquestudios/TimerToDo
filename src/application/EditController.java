@@ -61,7 +61,6 @@ public class EditController implements Initializable
 			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
 			Statement queryToSend = someConnection.createStatement();
 	
-			//System.out.println
 			queryToSend.executeUpdate
 			(			
 				"update list_items " 																		+
@@ -74,33 +73,27 @@ public class EditController implements Initializable
 			
 		
 			//@todo: if no exception, success window popup, if catch, error window.
-			//updateTable();//then make the main table update
 			datePicker.setValue(null);//clear fields
 			timePicker.setValue(null);
 			editPerson.setText(null);
 			editTask.setText(null);
+			
+			//System.out.println(editDescription.getText());
+			descriptionLabel.setText(editDescription.getText());
+			
 			editDescription.setText(null);
-			
-			descriptionLabel.setText("");
-			
-				
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
 			e.printStackTrace();			
 		} 
-		catch (ClassNotFoundException e) {
-			System.out.println("didn't work 2");
+		catch (ClassNotFoundException e) 
+		{
 			e.printStackTrace();
 		}
 		
-		
-		
-		
 		mainController.getSQLTable();
-		mainController.highlightIndex();
-		
+		mainController.highlightIndex();	
 	}
 	
 	public void cancelHit()
@@ -113,10 +106,7 @@ public class EditController implements Initializable
 		mainController = someController;
 	}
 	
-	
-	
-	//setters kinda
-	
+	//setters
 	public void setDescription(String someText)
 	{
 		editDescription.setText(someText);

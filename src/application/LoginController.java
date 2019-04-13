@@ -30,7 +30,6 @@ public class LoginController implements Initializable
 	
 	public void exitWasHit()
 	{
-		//thisStage.close();
 		Platform.exit();
 	}
 	
