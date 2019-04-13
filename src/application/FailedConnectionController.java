@@ -34,9 +34,7 @@ public class FailedConnectionController implements Initializable
 	
 	public void exitWasHit()
 	{
-		//thisStage.close();
 		Platform.exit();
-		//System.exit(0);//Platform.exit(); didn't work, this throws fatal error. Def a better way
 	}
 
 	public void setStage(Stage someStage)
@@ -52,16 +50,13 @@ public class FailedConnectionController implements Initializable
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
-		//ResizeHelper.addResizeListener(thisStage);
 		Platform.runLater(() ->
 		{
 			mainBorder.requestFocus();
-
 		});
 		
 		pwField.setOnAction(addResourceHandler);
 		nameField.setOnAction(addResourceHandler);
 		addressField.setOnAction(addResourceHandler);
-	
 	}
 }

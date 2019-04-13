@@ -398,9 +398,7 @@ public class MainUIController implements Initializable
 		Connection someConnection = null;
 		
 		String deleteQuery =  "delete from list_items where task_id = " + lastRowClicked; 
-		
-				//"delete from 'list_items' where 'task_id' = lastRowClicked;
-
+		 
 		try
 		{
 			Class.forName("com.mysql.cj.jdbc.Driver");			
@@ -416,36 +414,28 @@ public class MainUIController implements Initializable
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
 			e.printStackTrace();
-			
 		}	
 		catch(ClassNotFoundException e)
 		{
-			System.out.println("didn't work 2");
 			e.printStackTrace();
 		}
 		catch(Exception e)
 		{
-			System.out.println("didn't work 3");
 			e.printStackTrace();
 		}
 	}
 	
 	public void editButtonHit()
 	{
-//		mainBorderPane.setRight(newTaskPane);
-//		primaryStage.setWidth(1400);
-//		mainBorderPane.setCenter(newTaskPane);
-//		mainBorderPane.setBottom(null);
 		mainBorderPane.setBottom(bottomEditPane);
 		mainBorderPane.requestFocus();
 	}
 	
-	public void completeButtonHit()
-	{
-		
-	}
+//	public void completeButtonHit()
+//	{
+//		
+//	}
 	
 	public void tableWasHit()
 	{
@@ -464,27 +454,12 @@ public class MainUIController implements Initializable
 		EditController.setTaskNum(lastRowClicked);
 		
 		lastIndex = toDoTable.getSelectionModel().getSelectedIndex();
-		
-		
-		//DateTimeFormatter formatter = DateTimeFormatter.ofPattern("mm-dd-yyyy");
-		
+	
 		LocalDate dateToPass = LocalDate.parse(lastTimeDueClicked.substring(0, 10));
 		LocalTime timeToPass = LocalTime.parse(lastTimeDueClicked.substring(11, 19));
-
-		//DateFormat format = new SimpleDateFormat("hh:mm:ss");
-		
-//		DateTimeFormatter f2 = DateTimeFormatter.ofPattern("hh:mm:ss");
-//		TemporalAccessor temporalAccessor = 06.parse(lastTimeDueClicked.substring(12, 19));
-//		LocalTime t = temporalAccessor.query(LocalTime::from);
-		
-		
+	
 		login.setDatePicker(dateToPass);
 		login.setTimePicker(timeToPass);
-		//EditController.setDatePicker();
-		//EditController.setDescription(lastDescriptionClicked);
-		//"delete from 'list_items' where 'task_id' = lastRowClicked;
-		
-		//System.out.println(toDoTable.getSelectionModel().getSelectedIndex());
 	}
 	
 	public void markComplete()//@todo
@@ -509,7 +484,6 @@ public class MainUIController implements Initializable
 			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
 			Statement queryToSend = someConnection.createStatement();
 	
-			//System.out.println
 			queryToSend.executeUpdate
 			(			
 				"update list_items " 																		+
@@ -517,32 +491,25 @@ public class MainUIController implements Initializable
 				"where task_id = " + lastRowClicked + ";"
 			);
 			
-			//@todo: if no exception, success window popup, if catch, error window.
-
-			
-				
+			//@todo: if no exception, success window popup, if catch, error window.		
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
 			e.printStackTrace();			
 		} 
 		catch (ClassNotFoundException e) {
-			System.out.println("didn't work 2");
 			e.printStackTrace();
 		}
 		
 		getSQLTable();
 		highlightIndex();
-
 	}
 	
 	public void highlightIndex()
 	{
 		Platform.runLater(() ->
 		{
-			toDoTable.getSelectionModel().select(lastIndex);//Integer.parseInt(lastRowClicked));
-			//toDoTable.getSelectionModel().selectedItemProperty();
+			toDoTable.getSelectionModel().select(lastIndex);
 		});
 	}
 	
@@ -565,6 +532,4 @@ public class MainUIController implements Initializable
 	{
 		password = somePassword;
 	}
-	
-
 }
