@@ -1,9 +1,6 @@
 package itemPopulation;
 
 import javafx.beans.property.SimpleStringProperty;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 
 public class ToDoTableItems 
 {
@@ -16,8 +13,7 @@ public class ToDoTableItems
 	private SimpleStringProperty completed;
 	private SimpleStringProperty taskDescription;
 
-
-
+	
 	public String getTimeDue() {
 		return timeDue.get();
 	}

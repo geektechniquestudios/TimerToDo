@@ -74,8 +74,9 @@ public class LoginController implements Initializable
 	        });
 		}
 		catch(Exception e)
-		{}
-		System.out.println("test");
+		{
+			e.printStackTrace();
+		}
 	}
 	
 	public void setStage(Stage someStage)

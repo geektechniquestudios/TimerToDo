@@ -6,18 +6,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAccessor;
-import java.util.Date;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXButton;
-
 import itemPopulation.ResizeHelper;
 import itemPopulation.ToDoTableItems;
 import javafx.application.Platform;
@@ -38,42 +30,9 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-
-/*
-insert into list_items 
-(
-	time_due, 
-	person, 
-	task, 
-	task_description,
-	completed
-) 
-	values 
-(
-	'2020-10-29 12:00:01', 
-	"Deb", 
-	"Do more stuff", 
-	"another longer description of stuff to do",
-	false
-	
-);		
-
-create table list_items
-(
-	time_due datetime, 
-	time_started timestamp default current_timestamp on update current_timestamp, 
-	person varchar(255), 
-	task varchar(20), 
-	task_description varchar(255),
-	completed boolean default false, 
-	task_id int auto_increment,
-	 
-	primary key (task_id)
-);
-
-*/
 
 public class MainUIController implements Initializable
 {
@@ -116,10 +75,8 @@ public class MainUIController implements Initializable
 		while(!hasServerConnected)
 		{
 			getSQLTable();
-			
-			//try to connect to server and select all from db
-			//if failed, display message with a retry button
 		}	
+		
 		
 		setUpSwitching();
 		Platform.runLater(()->
@@ -146,7 +103,6 @@ public class MainUIController implements Initializable
 			
 			while(returnStatement.next())
 			{
-				System.out.println(returnStatement.getInt("completed"));
 				if(returnStatement.getInt("completed") == 1)
 				{
 					completeString = "completed"; 
@@ -169,25 +125,21 @@ public class MainUIController implements Initializable
 			}
 			
 			toDoTable.setItems(itemsToReturn);
-			hasServerConnected = true;
-				
+			hasServerConnected = true;			
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
 			e.printStackTrace();
 			sqlFail();
 			
 		}	
 		catch(ClassNotFoundException e)
 		{
-			System.out.println("didn't work 2");
 			e.printStackTrace();
 			sqlFail();
 		}
 		catch(Exception e)
 		{
-			System.out.println("didn't work 3");
 			e.printStackTrace();
 			sqlFail();
 		}
@@ -195,86 +147,52 @@ public class MainUIController implements Initializable
 	
 	private void sqlFail()//@todo: make a bool for once the user has logged in. If they have, show "there was a problem" dialog
 	{
-		Stage popupStage = new Stage();//send to failed connections controller
-		
-//		String whichPaneToLoad;
-		
-//		if(hasLoginShown)
-//		{
-//			whichPaneToLoad = "FailedConnection.fxml";
-//		}
-//		else
-//		{
-//			whichPaneToLoad = "LoginPage.fxml";
-//		}
-//		
-		
-		try
+		if(hasServerConnected)
 		{
-			
-
-			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("FailedConnection.fxml"));
-			Parent rootParent = popupRoot.load();
-			Scene rootScene = new Scene(rootParent);
-			
-//			if(hasLoginShown)
-//			{
-				FailedConnectionController failController = (FailedConnectionController) popupRoot.getController();
-	        	failController.setStage(popupStage);
-//	    		hasLoginShown = true;
-//			}
-//			else
-//			{
-//				LoginController login = (LoginController) popupRoot.getController();
-//				login.setStage(popupStage);
-//			}
-//			else 
-//			{
-//				LoginController login = (LoginController) popupRoot.getController();
-//				
-//			}
-			popupStage.setScene(rootScene);
-			popupStage.initStyle(StageStyle.TRANSPARENT);
-			ResizeHelper.addResizeListener(popupStage);
-			
-			
-//			rootParent.setOnMousePressed(new EventHandler<MouseEvent>()
-//			{
-//	            @Override
-//	            public void handle(MouseEvent event)
-//	            {
-//	                xOffset = event.getSceneX();
-//	                yOffset = event.getSceneY();
-//	            }
-//	        });
-	        rootParent.setOnMouseDragged(new EventHandler<MouseEvent>()
-	        {
-	            @Override
-	            public void handle(MouseEvent event)
-	            {
-//	                popupStage.setX(event.getScreenX() - xOffset);
-//	                popupStage.setY(event.getScreenY() - yOffset);
-	                popupStage.setOpacity(0.7f);
-	            }
-	        });
-	        rootParent.setOnDragDone(e ->
-	        {
-	        	popupStage.setOpacity(1.0f);
-	        });
-	        rootParent.setOnMouseReleased(e ->
-	        {
-	        	popupStage.setOpacity(1.0f);
-	        });
-	        
-	        popupStage.showAndWait();
-			
+			errorPopup();
 		}
-		catch(Exception e)
+		else
 		{
-			e.printStackTrace();
-			
-			System.out.println("mistake");
-		}	
+			Stage popupStage = new Stage();
+				
+			try
+			{
+				FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("FailedConnection.fxml"));
+				Parent rootParent = popupRoot.load();
+				Scene rootScene = new Scene(rootParent);
+	
+				FailedConnectionController failController = (FailedConnectionController) popupRoot.getController();
+		        failController.setStage(popupStage);
+	
+				popupStage.setScene(rootScene);
+				popupStage.initStyle(StageStyle.TRANSPARENT);
+				ResizeHelper.addResizeListener(popupStage);
+	
+		        rootParent.setOnMouseDragged(new EventHandler<MouseEvent>()
+		        {
+		            @Override
+		            public void handle(MouseEvent event)
+		            {
+		                popupStage.setOpacity(0.7f);
+		            }
+		        });
+		        rootParent.setOnDragDone(e ->
+		        {
+		        	popupStage.setOpacity(1.0f);
+		        });
+		        rootParent.setOnMouseReleased(e ->
+		        {
+		        	popupStage.setOpacity(1.0f);
+		        });
+		        
+		        popupStage.showAndWait();
+				
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}	
+		}
 	}
 	
 	private void setupTables()
@@ -287,15 +205,12 @@ public class MainUIController implements Initializable
 		completed.setCellValueFactory(new PropertyValueFactory<ToDoTableItems, String>("completed"));
 		
 		toDoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
 	}
-	//firstTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);//all columns autosize, might remove
 	
 	private void setUpSwitching()
 	{
 		try
 		{
-			//newTaskPane = (AnchorPane)FXMLLoader.load(getClass().getResource("NewTask.fxml"));
 			FXMLLoader newTaskLoader = new FXMLLoader(getClass().getResource("NewTask.fxml"));
 			Parent newTaskParent = newTaskLoader.load();
 			
@@ -306,8 +221,7 @@ public class MainUIController implements Initializable
 			task.setUsername(username);
 			task.setPassword(password);
 			task.setToDoTable(toDoTable);
-			
-			// pass current instance to edit controller 
+			task.setMainUI(this);
 		}
 		catch(Exception e)
 		{
@@ -320,10 +234,8 @@ public class MainUIController implements Initializable
 	{
 		try
 		{
-			//bottomEditPane = (VBox)FXMLLoader.load(getClass().getResource("EditData.fxml"));
 			FXMLLoader editLoader = new FXMLLoader(getClass().getResource("EditData.fxml"));
 			Parent editParent = editLoader.load();
-//			Scene editScene = new Scene(editParent);
 			
 			bottomEditPane = (VBox)editParent;
 			
@@ -333,25 +245,19 @@ public class MainUIController implements Initializable
 			login.setUsername(username);
 			login.setPassword(password);
 			login.setDescriptionLabel(descriptionLabel);
-//		    login.setStage(primaryStage);
 
 
 		}
 		catch(Exception e)
 		{
-			System.out.println("another one");
 			e.printStackTrace();
 		}
 	}
-	
-	
 	
 	public void setPrimaryStage(Stage someStage)
 	{
 		primaryStage = someStage;
 	}
-	
-	
 
 	//fxml below
 	public void exitWasHit()
@@ -371,8 +277,6 @@ public class MainUIController implements Initializable
 	
 	public void mainListWasHit()
 	{
-		//TableView mainToDo = (TableView)mainBorderPane.getCenter();
-		//mainBorderPane.setCenter(value);
 		mainBorderPane.setRight(descriptionBox);
 		mainBorderPane.setCenter(toDoTable);
 		mainBorderPane.setBottom(bottomHBox);
@@ -415,14 +319,17 @@ public class MainUIController implements Initializable
 		catch(SQLException e)
 		{
 			e.printStackTrace();
+			errorPopup();
 		}	
 		catch(ClassNotFoundException e)
 		{
 			e.printStackTrace();
+			errorPopup();
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			errorPopup();
 		}
 	}
 	
@@ -431,15 +338,9 @@ public class MainUIController implements Initializable
 		mainBorderPane.setBottom(bottomEditPane);
 		mainBorderPane.requestFocus();
 	}
-	
-//	public void completeButtonHit()
-//	{
-//		
-//	}
-	
+		
 	public void tableWasHit()
 	{
-		System.out.println(toDoTable.getSelectionModel().getSelectedItem().getTimeDue());
 		String lastPersonClicked = toDoTable.getSelectionModel().getSelectedItem().getPerson(); 
 		String lastTaskClicked = toDoTable.getSelectionModel().getSelectedItem().getTask();
 		String lastTimeDueClicked = toDoTable.getSelectionModel().getSelectedItem().getTimeDue();
@@ -462,11 +363,10 @@ public class MainUIController implements Initializable
 		login.setTimePicker(timeToPass);
 	}
 	
-	public void markComplete()//@todo
+	public void markComplete()
 	{
 		int isComplete;
 		
-		System.out.println(toDoTable.getSelectionModel().getSelectedItem().getCompleted());
 		if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
 		{
 			isComplete = 1;
@@ -491,18 +391,22 @@ public class MainUIController implements Initializable
 				"where task_id = " + lastRowClicked + ";"
 			);
 			
+			getSQLTable();
+			highlightIndex();
 			//@todo: if no exception, success window popup, if catch, error window.		
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();			
-		} 
-		catch (ClassNotFoundException e) {
 			e.printStackTrace();
+			errorPopup();
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+			errorPopup();
 		}
 		
-		getSQLTable();
-		highlightIndex();
+		
 	}
 	
 	public void highlightIndex()
@@ -513,6 +417,42 @@ public class MainUIController implements Initializable
 		});
 	}
 	
+	
+	void errorPopup()
+	{
+		try
+		{
+			Stage popupStage = new Stage();
+			popupStage.initStyle(StageStyle.TRANSPARENT);
+			popupStage.initModality(Modality.APPLICATION_MODAL);
+			popupStage.setResizable(false);
+			
+			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("ConnectionFailedPopup.fxml"));
+			Parent popupParent = popupRoot.load();
+			Scene popupScene = new Scene(popupParent);
+			
+			popupStage.setX
+			(
+				primaryStage.getX() + (primaryStage.getWidth()/2) - 155		
+			);
+			popupStage.setY
+			(
+				primaryStage.getY() + (primaryStage.getHeight()/2)- 75
+			);
+			
+			popupStage.setScene(popupScene);
+			popupStage.show();
+			
+			ConnectionFailedPopup failController = (ConnectionFailedPopup)popupRoot.getController();		
+			failController.setPopupStage(popupStage);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+	
+	//setters
 	public static void setHasServerConnected(boolean hasIt)
 	{
 		hasServerConnected = hasIt;
