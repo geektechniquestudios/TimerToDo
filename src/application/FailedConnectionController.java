@@ -2,11 +2,8 @@ package application;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
-
-import itemPopulation.ResizeHelper;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

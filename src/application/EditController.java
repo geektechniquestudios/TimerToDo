@@ -49,8 +49,7 @@ public class EditController implements Initializable
 		datePicker.setDefaultColor(Color.web("#bc7a00"));
 		timeBorderPane.setLeft(datePicker);		
 	}
-	
-	
+		
 	public void submitHit()
 	{
 		Connection  someConnection = null;
@@ -78,18 +77,18 @@ public class EditController implements Initializable
 			editPerson.setText(null);
 			editTask.setText(null);
 			
-			//System.out.println(editDescription.getText());
-			descriptionLabel.setText(editDescription.getText());
-			
+			descriptionLabel.setText(editDescription.getText());			
 			editDescription.setText(null);
 		}
 		catch(SQLException e)
 		{
-			e.printStackTrace();			
+			e.printStackTrace();	
+			mainController.errorPopup();
 		} 
 		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
+			mainController.errorPopup();
 		}
 		
 		mainController.getSQLTable();
@@ -101,12 +100,12 @@ public class EditController implements Initializable
 		mainController.mainListWasHit();
 	}
 	
+	//setters
 	public void setMainUIController(MainUIController someController)
 	{
 		mainController = someController;
 	}
 	
-	//setters
 	public void setDescription(String someText)
 	{
 		editDescription.setText(someText);

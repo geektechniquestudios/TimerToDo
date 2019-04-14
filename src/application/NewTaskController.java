@@ -17,10 +17,16 @@ import itemPopulation.ToDoTableItems;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class NewTaskController implements Initializable 
 {
@@ -29,8 +35,6 @@ public class NewTaskController implements Initializable
 	@FXML private JFXTextField taskField;
 	@FXML private JFXTextField personField;
 	@FXML private JFXTextArea descriptionField;
-	
-	
 	
 	private JFXDatePicker datePicker;
 	private JFXTimePicker timePicker;
@@ -41,6 +45,10 @@ public class NewTaskController implements Initializable
 	
 	private String completeString;
 	private TableView<ToDoTableItems> toDoTable;
+	
+	private MainUIController mainController;
+	
+//	private Stage currentStage;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -59,30 +67,7 @@ public class NewTaskController implements Initializable
 	
 	public void submitWasHit()
 	{
-		System.out.println(datePicker.getValue() + " " + timePicker.getValue());
-		System.out.println
-		(	
-				"insert into list_items" 															+
-						"("																			+
-							"time_due," 															+
-							"person," 																+
-							"task," 																+
-							"task_description,"														+
-							"completed"																+
-						") " 																		+
-						"values"																	+ 
-						"("																			+
-							"\'" + datePicker.getValue() + " " + timePicker.getValue() + ":00\'," 	+				
-							"\"" + personField.getText() + "\","									+				
-							"\"" + taskField.getText() + "\"," 										+	
-							"\"" + descriptionField.getText() + "\","								+				
-							false																	+					
-						");"
-				
-		);
-		
 		Connection someConnection = null;
-		//ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
 		
 		try
 		{
@@ -117,19 +102,46 @@ public class NewTaskController implements Initializable
 			personField.setText(null);
 			taskField.setText(null);
 			descriptionField.setText(null);
-			
-				
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
-			e.printStackTrace();			
-		} 
-		catch (ClassNotFoundException e) {
-			System.out.println("didn't work 2");
 			e.printStackTrace();
+			mainController.errorPopup();
+		} 
+		catch (ClassNotFoundException e) 
+		{
+			e.printStackTrace();
+			mainController.errorPopup();
 		}	
 	}
+	
+//	private void errorPopup()//@todo broken. npe
+//	{
+//		try
+//		{
+//			Stage popupStage = new Stage();
+//			popupStage.initStyle(StageStyle.TRANSPARENT);
+//			popupStage.initModality(Modality.APPLICATION_MODAL);
+//			popupStage.setResizable(false);
+//			
+//			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("ConnectionFailedPopup.fxml"));
+//			Parent popupParent = popupRoot.load();
+//			Scene popupScene = new Scene(popupParent);
+//			
+//			popupStage.setX(value);
+//			popupStage.setY(value);
+//			
+//			popupStage.setScene(popupScene);
+//			popupStage.show();
+//			
+//			ConnectionFailedPopup failController = (ConnectionFailedPopup)popupRoot.getController();		
+//			failController.setPopupStage(popupStage);
+//		}
+//		catch(Exception e)
+//		{
+//			e.printStackTrace();
+//		}
+//	}
 	
 	private void updateTable()
 	{
@@ -169,27 +181,22 @@ public class NewTaskController implements Initializable
 			}
 			
 			toDoTable.setItems(itemsToReturn);
-				
+			
 		}
 		catch(SQLException e)
 		{
-			System.out.println("didn't work");
-			e.printStackTrace();
-			
+			e.printStackTrace();		
 		}	
 		catch(ClassNotFoundException e)
 		{
-			System.out.println("didn't work 2");
 			e.printStackTrace();
 		}
 		catch(Exception e)
 		{
-			System.out.println("didn't work 3");
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public void setDatabaseAddress(String newDatabaseAddress)
 	{
 		databaseAddress = newDatabaseAddress;
@@ -209,4 +216,14 @@ public class NewTaskController implements Initializable
 	{
 		toDoTable = someTable;
 	}
+	
+	public void setMainUI(MainUIController someMainUI)
+	{
+		mainController = someMainUI;
+	}
+	
+//	public void setStage(Stage someStage)
+//	{
+//		currentStage = someStage;
+//	}
 }
