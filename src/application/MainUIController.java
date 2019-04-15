@@ -41,6 +41,7 @@ public class MainUIController implements Initializable
 	private String completeString;
 	private Stage primaryStage;
 	private AnchorPane newTaskPane;
+	private AnchorPane settingsPane;
 	private HBox bottomHBox;
 	private VBox bottomEditPane;
 	private String lastRowClicked;
@@ -51,7 +52,7 @@ public class MainUIController implements Initializable
 	private static String password;
 	
 	private int lastIndex;
-	private EditController login;
+	private EditController edit;
 	
 	@FXML private TableView<ToDoTableItems> toDoTable;
 	
@@ -78,7 +79,7 @@ public class MainUIController implements Initializable
 		}	
 		
 		
-		setUpSwitching();
+		setUpNewTask();
 		Platform.runLater(()->
 		{
 			mainBorderPane.requestFocus();
@@ -86,6 +87,7 @@ public class MainUIController implements Initializable
 		
 		bottomHBox = (HBox)mainBorderPane.getBottom();
 		setupBottomEditPane();
+		setupSettingsPane();
 	}
 	
 	public void getSQLTable()
@@ -125,13 +127,13 @@ public class MainUIController implements Initializable
 			}
 			
 			toDoTable.setItems(itemsToReturn);
-			hasServerConnected = true;			
+			hasServerConnected = true;	
+			popup("SuccessPopup.fxml");
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			sqlFail();
-			
+			sqlFail();		
 		}	
 		catch(ClassNotFoundException e)
 		{
@@ -149,7 +151,7 @@ public class MainUIController implements Initializable
 	{
 		if(hasServerConnected)
 		{
-			errorPopup();
+			popup("ConnectionFailedPopup.fxml");
 		}
 		else
 		{
@@ -207,7 +209,7 @@ public class MainUIController implements Initializable
 		toDoTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 	}
 	
-	private void setUpSwitching()
+	private void setUpNewTask()
 	{
 		try
 		{
@@ -216,11 +218,12 @@ public class MainUIController implements Initializable
 			
 			newTaskPane = (AnchorPane)newTaskParent;
 			
+			NewTaskController.setDatabaseAddress(databaseAddress);
+			NewTaskController.setUsername(username);
+			NewTaskController.setPassword(password);
+			
 			NewTaskController task = (NewTaskController)newTaskLoader.getController();
-			task.setDatabaseAddress(databaseAddress);
-			task.setUsername(username);
-			task.setPassword(password);
-			task.setToDoTable(toDoTable);
+			//task.setToDoTable(toDoTable);
 			task.setMainUI(this);
 		}
 		catch(Exception e)
@@ -239,12 +242,12 @@ public class MainUIController implements Initializable
 			
 			bottomEditPane = (VBox)editParent;
 			
-			login = (EditController) editLoader.getController();
-			login.setMainUIController(this);
-			login.setDatabaseAddress(databaseAddress);
-			login.setUsername(username);
-			login.setPassword(password);
-			login.setDescriptionLabel(descriptionLabel);
+			edit = (EditController) editLoader.getController();
+			edit.setMainUIController(this);
+			edit.setDatabaseAddress(databaseAddress);
+			edit.setUsername(username);
+			edit.setPassword(password);
+			edit.setDescriptionLabel(descriptionLabel);
 
 
 		}
@@ -254,35 +257,48 @@ public class MainUIController implements Initializable
 		}
 	}
 	
-	public void setPrimaryStage(Stage someStage)
+	private void setupSettingsPane()
 	{
-		primaryStage = someStage;
+		try 
+		{
+			FXMLLoader settingsLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+			Parent settingsParent = settingsLoader.load();
+			
+			SettingsController settingsController = (SettingsController)settingsLoader.getController();
+			settingsController.setMainUIController(this);
+			
+			settingsPane = (AnchorPane)settingsParent;
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	//fxml below
-	public void exitWasHit()
+	@FXML private void exitWasHit()
 	{
 		Platform.exit();
 	}
 	
-	public void maxWasHit()
+	@FXML private void maxWasHit()
 	{
 		primaryStage.setMaximized(!primaryStage.isMaximized());
 	}
 	
-	public void minWasHit()
+	@FXML private void minWasHit()
 	{
 		primaryStage.setIconified(true);
 	}
 	
-	public void mainListWasHit()
+	public void mainListWasHit()//also @FXML
 	{
 		mainBorderPane.setRight(descriptionBox);
 		mainBorderPane.setCenter(toDoTable);
 		mainBorderPane.setBottom(bottomHBox);
 	}
 	
-	public void newTaskWasHit()
+	@FXML private void newTaskWasHit()
 	{
 		mainBorderPane.setRight(null);
 		mainBorderPane.setCenter(newTaskPane);
@@ -290,14 +306,14 @@ public class MainUIController implements Initializable
 		
 	}
 	
-	public void settingsWasHit()
+	@FXML private void settingsWasHit()
 	{
 		mainBorderPane.setRight(null);
-		mainBorderPane.setCenter(null);
+		mainBorderPane.setCenter(settingsPane);//set settings as database menu
 		mainBorderPane.setBottom(null);
 	}
 	
-	public void deleteButtonHit()
+	@FXML private void deleteButtonHit()
 	{
 		Connection someConnection = null;
 		
@@ -319,27 +335,27 @@ public class MainUIController implements Initializable
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			errorPopup();
+			popup("ConnectionFailedPopup.fxml");
 		}	
 		catch(ClassNotFoundException e)
 		{
 			e.printStackTrace();
-			errorPopup();
+			popup("ConnectionFailedPopup.fxml");
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
-			errorPopup();
+			popup("ConnectionFailedPopup.fxml");
 		}
 	}
 	
-	public void editButtonHit()
+	@FXML private void editButtonHit()
 	{
 		mainBorderPane.setBottom(bottomEditPane);
 		mainBorderPane.requestFocus();
 	}
 		
-	public void tableWasHit()
+	@FXML private void tableWasHit()
 	{
 		String lastPersonClicked = toDoTable.getSelectionModel().getSelectedItem().getPerson(); 
 		String lastTaskClicked = toDoTable.getSelectionModel().getSelectedItem().getTask();
@@ -349,9 +365,9 @@ public class MainUIController implements Initializable
 		lastDescriptionClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskDescription();
 		descriptionLabel.setText(lastDescriptionClicked);
 		
-		login.setDescription(lastDescriptionClicked);
-		login.setPerson(lastPersonClicked);
-		login.setTask(lastTaskClicked);
+		edit.setDescription(lastDescriptionClicked);
+		edit.setPerson(lastPersonClicked);
+		edit.setTask(lastTaskClicked);
 		EditController.setTaskNum(lastRowClicked);
 		
 		lastIndex = toDoTable.getSelectionModel().getSelectedIndex();
@@ -359,27 +375,28 @@ public class MainUIController implements Initializable
 		LocalDate dateToPass = LocalDate.parse(lastTimeDueClicked.substring(0, 10));
 		LocalTime timeToPass = LocalTime.parse(lastTimeDueClicked.substring(11, 19));
 	
-		login.setDatePicker(dateToPass);
-		login.setTimePicker(timeToPass);
+		edit.setDatePicker(dateToPass);
+		edit.setTimePicker(timeToPass);
 	}
 	
-	public void markComplete()
+	@FXML private void markComplete()
 	{
 		int isComplete;
+		try 
+		{	
+			
+			if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
+			{
+				isComplete = 1;
+			}
+			else
+			{
+				isComplete = 0;
+			}
 		
-		if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
-		{
-			isComplete = 1;
-		}
-		else
-		{
-			isComplete = 0;
-		}
+			Connection  someConnection = null;
 		
-		Connection  someConnection = null;
-		
-		try
-		{
+
 			Class.forName("com.mysql.cj.jdbc.Driver");			
 			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
 			Statement queryToSend = someConnection.createStatement();
@@ -397,16 +414,16 @@ public class MainUIController implements Initializable
 		}
 		catch(SQLException e)
 		{
+			System.out.println("test1");
 			e.printStackTrace();
-			errorPopup();
+			popup("ConnectionFailedPopup.fxml");
 		} 
 		catch (ClassNotFoundException e) 
 		{
+			System.out.println("test2");
 			e.printStackTrace();
-			errorPopup();
-		}
-		
-		
+			popup("ConnectionFailedPopup.fxml");
+		}	
 	}
 	
 	public void highlightIndex()
@@ -417,8 +434,7 @@ public class MainUIController implements Initializable
 		});
 	}
 	
-	
-	void errorPopup()
+	void popup(String fxmlFile)
 	{
 		try
 		{
@@ -427,7 +443,7 @@ public class MainUIController implements Initializable
 			popupStage.initModality(Modality.APPLICATION_MODAL);
 			popupStage.setResizable(false);
 			
-			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("ConnectionFailedPopup.fxml"));
+			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource(fxmlFile));
 			Parent popupParent = popupRoot.load();
 			Scene popupScene = new Scene(popupParent);
 			
@@ -443,12 +459,21 @@ public class MainUIController implements Initializable
 			popupStage.setScene(popupScene);
 			popupStage.show();
 			
-			ConnectionFailedPopup failController = (ConnectionFailedPopup)popupRoot.getController();		
-			failController.setPopupStage(popupStage);
+			if(fxmlFile.equals("ConnectionFailedPopup.fxml"))
+			{
+				ConnectionFailedPopup failController = (ConnectionFailedPopup)popupRoot.getController();		
+				failController.setPopupStage(popupStage);
+			}
+			else
+			{
+				SuccessPopupController successController = (SuccessPopupController)popupRoot.getController();
+				successController.setPopupStage(popupStage);
+			}
 		}
 		catch(Exception e)
 		{
 			e.printStackTrace();
+			System.out.println("This should fire once intentionally");
 		}
 	}
 	
@@ -471,5 +496,10 @@ public class MainUIController implements Initializable
 	public static void setPassword(String somePassword)
 	{
 		password = somePassword;
+	}
+	
+	public void setPrimaryStage(Stage someStage)
+	{
+		primaryStage = someStage;
 	}
 }

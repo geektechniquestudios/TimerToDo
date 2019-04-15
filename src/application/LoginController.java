@@ -28,12 +28,12 @@ public class LoginController implements Initializable
 	
 	Stage thisStage;
 	
-	public void exitWasHit()
+	@FXML private void exitWasHit()
 	{
 		Platform.exit();
 	}
 	
-	public void submitWasHit()
+	@FXML private void submitWasHit()
 	{         
 		MainUIController.setDatabaseAddress(addressField.getText());
 		MainUIController.setUsername(nameField.getText());

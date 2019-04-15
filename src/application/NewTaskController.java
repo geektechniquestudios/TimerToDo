@@ -3,30 +3,18 @@ package application;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ResourceBundle;
-
 import com.jfoenix.controls.JFXDatePicker;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
-
-import itemPopulation.ToDoTableItems;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
-import javafx.stage.StageStyle;
+
 
 public class NewTaskController implements Initializable 
 {
@@ -39,16 +27,14 @@ public class NewTaskController implements Initializable
 	private JFXDatePicker datePicker;
 	private JFXTimePicker timePicker;
 	
-	private String databaseAddress;
-	private String username;
-	private String password;
+	private static String databaseAddress;
+	private static String username;
+	private static String password;
 	
-	private String completeString;
-	private TableView<ToDoTableItems> toDoTable;
+//	private String completeString;
+//	private TableView<ToDoTableItems> toDoTable;
 	
 	private MainUIController mainController;
-	
-//	private Stage currentStage;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -65,7 +51,7 @@ public class NewTaskController implements Initializable
 	
 	}
 	
-	public void submitWasHit()
+	@FXML private void submitWasHit()
 	{
 		Connection someConnection = null;
 		
@@ -95,135 +81,102 @@ public class NewTaskController implements Initializable
 				");"
 			);
 			
-			//@todo: if no exception, success window popup, if catch, error window.
-			updateTable();//then make the main table update
+			mainController.getSQLTable();//updateTable();//then make the main table update
 			datePicker.setValue(null);//clear fields
 			timePicker.setValue(null);
 			personField.setText(null);
 			taskField.setText(null);
 			descriptionField.setText(null);
+			//success popup
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();
-			mainController.errorPopup();
+			mainController.popup("ConnectionFailedPopup.fxml");
 		} 
 		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
-			mainController.errorPopup();
+			mainController.popup("ConnectionFailedPopup.fxml");
 		}	
 	}
-	
-//	private void errorPopup()//@todo broken. npe
+		
+//	public void updateTable()
 //	{
+//		Connection someConnection = null;
+//		ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
+//		
 //		try
 //		{
-//			Stage popupStage = new Stage();
-//			popupStage.initStyle(StageStyle.TRANSPARENT);
-//			popupStage.initModality(Modality.APPLICATION_MODAL);
-//			popupStage.setResizable(false);
+//			Class.forName("com.mysql.cj.jdbc.Driver");			
+//			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+//			Statement queryToSend = someConnection.createStatement();
+//	
+//			ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
 //			
-//			FXMLLoader popupRoot = new FXMLLoader(getClass().getResource("ConnectionFailedPopup.fxml"));
-//			Parent popupParent = popupRoot.load();
-//			Scene popupScene = new Scene(popupParent);
+//			while(returnStatement.next())
+//			{
+//				System.out.println(returnStatement.getInt("completed"));
+//				if(returnStatement.getInt("completed") == 1)
+//				{
+//					completeString = "completed"; 
+//				}
+//				else
+//				{
+//					completeString = "incomplete";
+//				}
+//				itemsToReturn.add(new ToDoTableItems
+//				(
+//					returnStatement.getString("time_due"),
+//					returnStatement.getString("time_started"),
+//					returnStatement.getString("person"),
+//					returnStatement.getString("task"),
+//					returnStatement.getString("task_id"),
+//					completeString,
+//					
+//					returnStatement.getString("task_description")
+//				));			
+//			}
 //			
-//			popupStage.setX(value);
-//			popupStage.setY(value);
+//			toDoTable.setItems(itemsToReturn);
 //			
-//			popupStage.setScene(popupScene);
-//			popupStage.show();
-//			
-//			ConnectionFailedPopup failController = (ConnectionFailedPopup)popupRoot.getController();		
-//			failController.setPopupStage(popupStage);
+//		}
+//		catch(SQLException e)
+//		{
+//			e.printStackTrace();		
+//		}	
+//		catch(ClassNotFoundException e)
+//		{
+//			e.printStackTrace();
 //		}
 //		catch(Exception e)
 //		{
 //			e.printStackTrace();
 //		}
 //	}
-	
-	private void updateTable()
-	{
-		Connection someConnection = null;
-		ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
-		
-		try
-		{
-			Class.forName("com.mysql.cj.jdbc.Driver");			
-			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
-			Statement queryToSend = someConnection.createStatement();
-	
-			ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
-			
-			while(returnStatement.next())
-			{
-				System.out.println(returnStatement.getInt("completed"));
-				if(returnStatement.getInt("completed") == 1)
-				{
-					completeString = "completed"; 
-				}
-				else
-				{
-					completeString = "incomplete";
-				}
-				itemsToReturn.add(new ToDoTableItems
-				(
-					returnStatement.getString("time_due"),
-					returnStatement.getString("time_started"),
-					returnStatement.getString("person"),
-					returnStatement.getString("task"),
-					returnStatement.getString("task_id"),
-					completeString,
-					
-					returnStatement.getString("task_description")
-				));			
-			}
-			
-			toDoTable.setItems(itemsToReturn);
-			
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();		
-		}	
-		catch(ClassNotFoundException e)
-		{
-			e.printStackTrace();
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-		}
-	}
 
-	public void setDatabaseAddress(String newDatabaseAddress)
+	public static void setDatabaseAddress(String newDatabaseAddress)
 	{
 		databaseAddress = newDatabaseAddress;
 	}
 	
-	public void setUsername(String someUsername)
+	public static void setUsername(String someUsername)
 	{
 		username = someUsername;
 	}
 	
-	public void setPassword(String somePassword)
+	public static void setPassword(String somePassword)
 	{
 		password = somePassword;
 	}
 	
-	public void setToDoTable(TableView<ToDoTableItems> someTable)
-	{
-		toDoTable = someTable;
-	}
+//	public void setToDoTable(TableView<ToDoTableItems> someTable)
+//	{
+//		toDoTable = someTable;
+//	}
 	
 	public void setMainUI(MainUIController someMainUI)
 	{
 		mainController = someMainUI;
 	}
-	
-//	public void setStage(Stage someStage)
-//	{
-//		currentStage = someStage;
-//	}
 }

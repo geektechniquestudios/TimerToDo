@@ -1,11 +1,13 @@
 package application;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-public class ConnectionFailedPopup 
+public class SuccessPopupController 
 {
-	private Stage thisStage;
+	Stage thisStage;
 	
 	@FXML private void continueWasHit()
 	{
@@ -16,4 +18,9 @@ public class ConnectionFailedPopup
 	{
 		thisStage = someStage;
 	}
+	
+	EventHandler<ActionEvent> addResourceHandler = event -> 
+	{
+	    continueWasHit();
+	};
 }

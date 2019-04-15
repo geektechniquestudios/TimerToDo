@@ -19,8 +19,21 @@ public class FailedConnectionController implements Initializable
 	@FXML private JFXTextField addressField;
 	@FXML private JFXTextField nameField;
 	@FXML private JFXPasswordField pwField;
-
-	public void retryWasHit()
+ 
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) 
+	{
+		Platform.runLater(() ->
+		{
+			mainBorder.requestFocus();
+		});
+		
+		pwField.setOnAction(addResourceHandler);
+		nameField.setOnAction(addResourceHandler);
+		addressField.setOnAction(addResourceHandler);
+	}
+	
+	@FXML private void retryWasHit()
 	{
 		MainUIController.setDatabaseAddress(addressField.getText());
 		MainUIController.setUsername(nameField.getText());
@@ -29,7 +42,7 @@ public class FailedConnectionController implements Initializable
 		thisStage.close();	
 	}
 	
-	public void exitWasHit()
+	@FXML private void exitWasHit()
 	{
 		Platform.exit();
 	}
@@ -44,16 +57,5 @@ public class FailedConnectionController implements Initializable
 	    retryWasHit();
 	};
 	
-	@Override
-	public void initialize(URL arg0, ResourceBundle arg1) 
-	{
-		Platform.runLater(() ->
-		{
-			mainBorder.requestFocus();
-		});
-		
-		pwField.setOnAction(addResourceHandler);
-		nameField.setOnAction(addResourceHandler);
-		addressField.setOnAction(addResourceHandler);
-	}
+
 }
