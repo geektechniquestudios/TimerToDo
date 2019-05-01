@@ -42,7 +42,7 @@
             </VBox>
          </top>
          <bottom>
-            <JFXButton onAction="#submitWasHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
+            <JFXButton defaultButton="true" onAction="#submitWasHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
                <BorderPane.margin>
                   <Insets bottom="20.0" />
                </BorderPane.margin>

@@ -315,37 +315,40 @@ public class MainUIController implements Initializable
 	
 	@FXML private void deleteButtonHit()
 	{
-		Connection someConnection = null;
-		
-		String deleteQuery =  "delete from list_items where task_id = " + lastRowClicked; 
-		 
-		try
+		if(!toDoTable.getSelectionModel().isEmpty())//prevents npe if no table item is selected 
 		{
-			Class.forName("com.mysql.cj.jdbc.Driver");			
-			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
-			Statement queryToSend = someConnection.createStatement();
-	
-			queryToSend.executeUpdate(deleteQuery);
+			Connection someConnection = null;
 			
-			//update todotable
-			getSQLTable();
-			descriptionLabel.setText("");
+			String deleteQuery =  "delete from list_items where task_id = " + lastRowClicked; 
+			 
+			try
+			{
+				Class.forName("com.mysql.cj.jdbc.Driver");			
+				someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+				Statement queryToSend = someConnection.createStatement();
 		
-		}
-		catch(SQLException e)
-		{
-			e.printStackTrace();
-			popup("ConnectionFailedPopup.fxml");
-		}	
-		catch(ClassNotFoundException e)
-		{
-			e.printStackTrace();
-			popup("ConnectionFailedPopup.fxml");
-		}
-		catch(Exception e)
-		{
-			e.printStackTrace();
-			popup("ConnectionFailedPopup.fxml");
+				queryToSend.executeUpdate(deleteQuery);
+				
+				//update todotable
+				getSQLTable();
+				descriptionLabel.setText("");
+			
+			}
+			catch(SQLException e)
+			{
+				e.printStackTrace();
+				popup("ConnectionFailedPopup.fxml");
+			}	
+			catch(ClassNotFoundException e)
+			{
+				e.printStackTrace();
+				popup("ConnectionFailedPopup.fxml");
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+				popup("ConnectionFailedPopup.fxml");
+			}
 		}
 	}
 	
@@ -357,26 +360,29 @@ public class MainUIController implements Initializable
 		
 	@FXML private void tableWasHit()
 	{
-		String lastPersonClicked = toDoTable.getSelectionModel().getSelectedItem().getPerson(); 
-		String lastTaskClicked = toDoTable.getSelectionModel().getSelectedItem().getTask();
-		String lastTimeDueClicked = toDoTable.getSelectionModel().getSelectedItem().getTimeDue();
+		if(getIsSelected())
+		{
+			String lastPersonClicked = toDoTable.getSelectionModel().getSelectedItem().getPerson(); 
+			String lastTaskClicked = toDoTable.getSelectionModel().getSelectedItem().getTask();
+			String lastTimeDueClicked = toDoTable.getSelectionModel().getSelectedItem().getTimeDue();
+			
+			lastRowClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskID();
+			lastDescriptionClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskDescription();
+			descriptionLabel.setText(lastDescriptionClicked);
+			
+			edit.setDescription(lastDescriptionClicked);
+			edit.setPerson(lastPersonClicked);
+			edit.setTask(lastTaskClicked);
+			EditController.setTaskNum(lastRowClicked);
+			
+			lastIndex = toDoTable.getSelectionModel().getSelectedIndex();
 		
-		lastRowClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskID();
-		lastDescriptionClicked = toDoTable.getSelectionModel().getSelectedItem().getTaskDescription();
-		descriptionLabel.setText(lastDescriptionClicked);
+			LocalDate dateToPass = LocalDate.parse(lastTimeDueClicked.substring(0, 10));
+			LocalTime timeToPass = LocalTime.parse(lastTimeDueClicked.substring(11, 19));
 		
-		edit.setDescription(lastDescriptionClicked);
-		edit.setPerson(lastPersonClicked);
-		edit.setTask(lastTaskClicked);
-		EditController.setTaskNum(lastRowClicked);
-		
-		lastIndex = toDoTable.getSelectionModel().getSelectedIndex();
-	
-		LocalDate dateToPass = LocalDate.parse(lastTimeDueClicked.substring(0, 10));
-		LocalTime timeToPass = LocalTime.parse(lastTimeDueClicked.substring(11, 19));
-	
-		edit.setDatePicker(dateToPass);
-		edit.setTimePicker(timeToPass);
+			edit.setDatePicker(dateToPass);
+			edit.setTimePicker(timeToPass);
+		}
 	}
 	
 	@FXML private void markComplete()
@@ -384,33 +390,35 @@ public class MainUIController implements Initializable
 		int isComplete;
 		try 
 		{	
+			if(getIsSelected())//this keeps a npe from happening if no table item is selected
+			{
+				if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
+				{
+					isComplete = 1;
+				}
+				else
+				{
+					isComplete = 0;
+				}
 			
-			if(toDoTable.getSelectionModel().getSelectedItem().getCompleted().equals("incomplete"))
-			{
-				isComplete = 1;
-			}
-			else
-			{
-				isComplete = 0;
-			}
-		
-			Connection  someConnection = null;
-		
-
-			Class.forName("com.mysql.cj.jdbc.Driver");			
-			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
-			Statement queryToSend = someConnection.createStatement();
+				Connection  someConnection = null;
+			
 	
-			queryToSend.executeUpdate
-			(			
-				"update list_items " 																		+
-					"set completed = \"" + isComplete + "\" "												+
-				"where task_id = " + lastRowClicked + ";"
-			);
-			
-			getSQLTable();
-			highlightIndex();
-			//@todo: if no exception, success window popup, if catch, error window.		
+				Class.forName("com.mysql.cj.jdbc.Driver");			
+				someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
+				Statement queryToSend = someConnection.createStatement();
+		
+				queryToSend.executeUpdate
+				(			
+					"update list_items " 																		+
+						"set completed = \"" + isComplete + "\" "												+
+					"where task_id = " + lastRowClicked + ";"
+				);
+				
+				getSQLTable();
+				highlightIndex();
+				//@todo: if no exception, success window popup, if catch, error window.	
+			}
 		}
 		catch(SQLException e)
 		{
@@ -501,5 +509,11 @@ public class MainUIController implements Initializable
 	public void setPrimaryStage(Stage someStage)
 	{
 		primaryStage = someStage;
+	}
+	
+	//getter
+	public boolean getIsSelected()
+	{
+		return !toDoTable.getSelectionModel().isEmpty();
 	}
 }

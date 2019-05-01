@@ -52,7 +52,7 @@ public class FailedConnectionController implements Initializable
 		thisStage = someStage;
 	} 
 	
-	EventHandler<ActionEvent> addResourceHandler = event -> 
+	EventHandler<ActionEvent> addResourceHandler = event -> //this makes ENTER do stuff
 	{
 	    retryWasHit();
 	};

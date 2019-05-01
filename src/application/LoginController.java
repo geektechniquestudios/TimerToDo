@@ -26,7 +26,7 @@ public class LoginController implements Initializable
 	@FXML private JFXPasswordField pwField;
 	@FXML private BorderPane mainBorder;
 	
-	Stage thisStage;
+	private Stage thisStage;
 	
 	@FXML private void exitWasHit()
 	{
@@ -46,17 +46,20 @@ public class LoginController implements Initializable
 	        Parent mainParent = mainLoader.load();
 	        Scene mainScene = new Scene(mainParent);
 	        
+	        mainScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+	       
 	        //set primary stage
 	        MainUIController minPaneController = (MainUIController) mainLoader.getController();
 	        minPaneController.setPrimaryStage(thisStage);
 	        
 	        thisStage.setScene(mainScene);
 	        thisStage.show();
-	        ResizeHelper.addResizeListener(thisStage);
 			thisStage.setMinWidth(1000);
 			thisStage.setMinHeight(675);
 			
-			 mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
+	        ResizeHelper.addResizeListener(thisStage);
+
+			mainParent.setOnMouseDragged(new EventHandler<MouseEvent>()
 	        {
 	            @Override
 	            public void handle(MouseEvent event)
@@ -102,6 +105,4 @@ public class LoginController implements Initializable
 	{
 	    submitWasHit();
 	};
-
-	
 }

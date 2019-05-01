@@ -16,7 +16,7 @@
       </Label>
    </center>
    <bottom>
-      <JFXButton onAction="#continueWasHit" style="-fx-border-color: white; -fx-border-radius: .5em;" text="Continue" textFill="WHITE" BorderPane.alignment="CENTER">
+      <JFXButton fx:id="continueButton" onAction="#continueWasHit" style="-fx-border-color: white; -fx-border-radius: .5em;" text="Continue" textFill="WHITE" BorderPane.alignment="CENTER">
          <BorderPane.margin>
             <Insets bottom="30.0" />
          </BorderPane.margin>

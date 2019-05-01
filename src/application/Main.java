@@ -5,6 +5,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -17,7 +18,7 @@ public class Main extends Application
 	{
 		try 
 		{
-			//primaryStage.getIcons().add(new Image("/imageAssets/icon.png"));
+			primaryStage.getIcons().add(new Image("/imageAssets/icon.png"));
 					
 	        FXMLLoader loginLoader = new FXMLLoader(getClass().getResource("LoginPage.fxml"));
 	        Parent loginParent = loginLoader.load();
@@ -25,8 +26,6 @@ public class Main extends Application
 	        
 	        LoginController login = (LoginController) loginLoader.getController();
 	        login.setStage(primaryStage);
-
-			loginScene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			
 			primaryStage.setScene(loginScene);
 			primaryStage.initStyle(StageStyle.TRANSPARENT);

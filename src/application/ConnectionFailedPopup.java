@@ -1,11 +1,16 @@
 package application;
 
+import com.jfoenix.controls.JFXButton;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 public class ConnectionFailedPopup 
 {
 	private Stage thisStage;
+	
+	@FXML private JFXButton continueButton;
 	
 	@FXML private void continueWasHit()
 	{
@@ -16,4 +21,9 @@ public class ConnectionFailedPopup
 	{
 		thisStage = someStage;
 	}
+	
+	EventHandler<ActionEvent> addResourceHandler = event -> 
+	{
+	    continueWasHit();
+	};
 }

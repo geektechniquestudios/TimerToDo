@@ -69,8 +69,7 @@ public class EditController implements Initializable
 					"task_description = \"" + editDescription.getText() + "\" "								+
 				"where task_id = " + taskNumber + ";"
 			);
-			
-		
+				
 			datePicker.setValue(null);//clear fields
 			timePicker.setValue(null);
 			editPerson.setText(null);
@@ -91,9 +90,7 @@ public class EditController implements Initializable
 		{
 			e.printStackTrace();
 			mainController.popup("ConnectionFailedPopup.fxml");
-		}
-		
-			
+		}	
 	}
 	
 	@FXML private void cancelHit()

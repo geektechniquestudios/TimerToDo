@@ -24,17 +24,13 @@ public class NewTaskController implements Initializable
 	@FXML private JFXTextField personField;
 	@FXML private JFXTextArea descriptionField;
 	
-	private JFXDatePicker datePicker;
-	private JFXTimePicker timePicker;
-	
 	private static String databaseAddress;
 	private static String username;
 	private static String password;
 	
-//	private String completeString;
-//	private TableView<ToDoTableItems> toDoTable;
-	
 	private MainUIController mainController;
+	private JFXDatePicker datePicker;
+	private JFXTimePicker timePicker;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
@@ -87,7 +83,6 @@ public class NewTaskController implements Initializable
 			personField.setText(null);
 			taskField.setText(null);
 			descriptionField.setText(null);
-			//success popup
 		}
 		catch(SQLException e)
 		{
@@ -100,60 +95,6 @@ public class NewTaskController implements Initializable
 			mainController.popup("ConnectionFailedPopup.fxml");
 		}	
 	}
-		
-//	public void updateTable()
-//	{
-//		Connection someConnection = null;
-//		ObservableList<ToDoTableItems> itemsToReturn = FXCollections.observableArrayList();
-//		
-//		try
-//		{
-//			Class.forName("com.mysql.cj.jdbc.Driver");			
-//			someConnection = DriverManager.getConnection("jdbc:mysql:" + databaseAddress,username,password);			
-//			Statement queryToSend = someConnection.createStatement();
-//	
-//			ResultSet returnStatement = queryToSend.executeQuery("SELECT * FROM list_items");
-//			
-//			while(returnStatement.next())
-//			{
-//				System.out.println(returnStatement.getInt("completed"));
-//				if(returnStatement.getInt("completed") == 1)
-//				{
-//					completeString = "completed"; 
-//				}
-//				else
-//				{
-//					completeString = "incomplete";
-//				}
-//				itemsToReturn.add(new ToDoTableItems
-//				(
-//					returnStatement.getString("time_due"),
-//					returnStatement.getString("time_started"),
-//					returnStatement.getString("person"),
-//					returnStatement.getString("task"),
-//					returnStatement.getString("task_id"),
-//					completeString,
-//					
-//					returnStatement.getString("task_description")
-//				));			
-//			}
-//			
-//			toDoTable.setItems(itemsToReturn);
-//			
-//		}
-//		catch(SQLException e)
-//		{
-//			e.printStackTrace();		
-//		}	
-//		catch(ClassNotFoundException e)
-//		{
-//			e.printStackTrace();
-//		}
-//		catch(Exception e)
-//		{
-//			e.printStackTrace();
-//		}
-//	}
 
 	public static void setDatabaseAddress(String newDatabaseAddress)
 	{
@@ -169,11 +110,6 @@ public class NewTaskController implements Initializable
 	{
 		password = somePassword;
 	}
-	
-//	public void setToDoTable(TableView<ToDoTableItems> someTable)
-//	{
-//		toDoTable = someTable;
-//	}
 	
 	public void setMainUI(MainUIController someMainUI)
 	{
