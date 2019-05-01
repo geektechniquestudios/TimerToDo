@@ -21,11 +21,11 @@ create table list_items
 
 I will eventually build an installer for the server that will handle most of the BS. Enjoy!
 
-![](demoImages\Demo1.png)
-![](demoImages\Demo2.png)
-![](demoImages\Demo3.png)
-![](demoImages\Demo4.png)
-![](demoImages\Demo5.png)
+![](demoImages/Demo1.png)
+![](demoImages/Demo2.png)
+![](demoImages/Demo3.png)
+![](demoImages/Demo4.png)
+![](demoImages/Demo5.png)
 
 
 ###### If you want to fork this repository, or you would like to edit the code, it is important for you to know that this project was made using the Eclipse IDE with Java 1.8 using [JPhoenix](https://github.com/jfoenixadmin/JFoenix) and JavaFX. You must import JFoenix if you want the code to run.
