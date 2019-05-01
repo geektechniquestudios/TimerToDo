@@ -50,7 +50,7 @@ public class EditController implements Initializable
 		timeBorderPane.setLeft(datePicker);		
 	}
 		
-	public void submitHit()
+	@FXML private void submitHit()
 	{
 		Connection  someConnection = null;
 		
@@ -69,9 +69,7 @@ public class EditController implements Initializable
 					"task_description = \"" + editDescription.getText() + "\" "								+
 				"where task_id = " + taskNumber + ";"
 			);
-			
-		
-			//@todo: if no exception, success window popup, if catch, error window.
+				
 			datePicker.setValue(null);//clear fields
 			timePicker.setValue(null);
 			editPerson.setText(null);
@@ -79,23 +77,23 @@ public class EditController implements Initializable
 			
 			descriptionLabel.setText(editDescription.getText());			
 			editDescription.setText(null);
+			
+			mainController.getSQLTable();
+			mainController.highlightIndex();
 		}
 		catch(SQLException e)
 		{
 			e.printStackTrace();	
-			mainController.errorPopup();
+			mainController.popup("ConnectionFailedPopup.fxml");
 		} 
 		catch (ClassNotFoundException e) 
 		{
 			e.printStackTrace();
-			mainController.errorPopup();
-		}
-		
-		mainController.getSQLTable();
-		mainController.highlightIndex();	
+			mainController.popup("ConnectionFailedPopup.fxml");
+		}	
 	}
 	
-	public void cancelHit()
+	@FXML private void cancelHit()
 	{
 		mainController.mainListWasHit();
 	}

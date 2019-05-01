@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="150.0" maxWidth="290.0" minHeight="150.0" minWidth="290.0" prefHeight="150.0" prefWidth="290.0" style="-fx-background-color: #4b8c6b;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SuccessPopupController">
+   <center>
+      <Label text="Success" textFill="WHITE" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+   </center>
+   <bottom>
+      <JFXButton onAction="#continueWasHit" style="-fx-border-color: white; -fx-border-radius: .5em;" text="Continue" textFill="WHITE" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="30.0" />
+         </BorderPane.margin>
+         <font>
+            <Font size="15.0" />
+         </font>
+      </JFXButton>
+   </bottom>
+</BorderPane>

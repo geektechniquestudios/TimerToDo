@@ -7,47 +7,127 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #495763;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <top>
-      <VBox>
-         <children>
+<AnchorPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.SettingsController">
+   <children>
+      <BorderPane prefHeight="384.0" prefWidth="436.0" style="-fx-background-color: #495763;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <Label text="Change Connection Settings" textFill="WHITE" BorderPane.alignment="CENTER">
+                           <font>
+                              <Font size="28.0" />
+                           </font>
+                        </Label>
+                        <Region HBox.hgrow="ALWAYS" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <HBox maxHeight="2.0" minHeight="2.0" prefHeight="2.0" style="-fx-background-color: white;">
+                     <VBox.margin>
+                        <Insets left="20.0" right="20.0" />
+                     </VBox.margin>
+                  </HBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </top>
+         <bottom>
+            <JFXButton defaultButton="true" onAction="#submitWasHit" style="-fx-border-radius: .5em; -fx-border-color: white;" text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
+               <BorderPane.margin>
+                  <Insets bottom="20.0" />
+               </BorderPane.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </JFXButton>
+         </bottom>
+         <center>
             <HBox>
                <children>
                   <Region HBox.hgrow="ALWAYS" />
-                  <Label text="Add a new task" textFill="WHITE" BorderPane.alignment="CENTER">
-                     <font>
-                        <Font size="22.0" />
-                     </font>
-                  </Label>
-                  <Region HBox.hgrow="ALWAYS" />
+                  <VBox>
+                     <children>
+                        <Region VBox.vgrow="ALWAYS" />
+                        <HBox>
+                           <children>
+                              <JFXTextField fx:id="addressField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" text="//localhost/todolist" unFocusColor="#4b8c6b">
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="100.0" top="50.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <Label text="Database Address" textFill="WHITE">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="25.0" top="50.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox>
+                           <children>
+                              <JFXTextField fx:id="nameField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" text="root" unFocusColor="#4b8c6b">
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="100.0" top="50.0" />
+                                 </HBox.margin>
+                              </JFXTextField>
+                              <Label text="Username" textFill="WHITE">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="25.0" top="50.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="410.0" layoutY="10.0" prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <JFXPasswordField fx:id="pwField" focusColor="WHITE" style="-fx-background-color: white; -fx-background-radius: .5em;" unFocusColor="#4b8c6b">
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="100.0" top="50.0" />
+                                 </HBox.margin>
+                              </JFXPasswordField>
+                              <Label text="Password" textFill="WHITE">
+                                 <font>
+                                    <Font size="19.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets bottom="25.0" left="25.0" right="25.0" top="50.0" />
+                                 </HBox.margin>
+                                 <padding>
+                                    <Insets left="50.0" />
+                                 </padding>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <Region layoutX="10.0" layoutY="10.0" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+                  <Region layoutX="10.0" layoutY="10.0" HBox.hgrow="ALWAYS" />
                </children>
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <VBox.margin>
-                  <Insets bottom="10.0" />
-               </VBox.margin>
             </HBox>
-            <HBox maxHeight="2.0" minHeight="2.0" prefHeight="2.0" style="-fx-background-color: white;">
-               <VBox.margin>
-                  <Insets left="20.0" right="20.0" />
-               </VBox.margin>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
-   </top>
-   <bottom>
-      <JFXButton text="Submit" textFill="WHITE" BorderPane.alignment="CENTER">
-         <BorderPane.margin>
-            <Insets bottom="20.0" />
-         </BorderPane.margin>
-         <font>
-            <Font name="System Bold" size="18.0" />
-         </font>
-      </JFXButton>
-   </bottom>
-</BorderPane>
+         </center>
+         <padding>
+            <Insets top="15.0" />
+         </padding>
+      </BorderPane>
+   </children>
+</AnchorPane>

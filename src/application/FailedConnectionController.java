@@ -19,31 +19,7 @@ public class FailedConnectionController implements Initializable
 	@FXML private JFXTextField addressField;
 	@FXML private JFXTextField nameField;
 	@FXML private JFXPasswordField pwField;
-
-	public void retryWasHit()
-	{
-		MainUIController.setDatabaseAddress(addressField.getText());
-		MainUIController.setUsername(nameField.getText());
-		MainUIController.setPassword(pwField.getText());
-		
-		thisStage.close();	
-	}
-	
-	public void exitWasHit()
-	{
-		Platform.exit();
-	}
-
-	public void setStage(Stage someStage)
-	{
-		thisStage = someStage;
-	} 
-	
-	EventHandler<ActionEvent> addResourceHandler = event -> 
-	{
-	    retryWasHit();
-	};
-	
+ 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) 
 	{
@@ -56,4 +32,30 @@ public class FailedConnectionController implements Initializable
 		nameField.setOnAction(addResourceHandler);
 		addressField.setOnAction(addResourceHandler);
 	}
+	
+	@FXML private void retryWasHit()
+	{
+		MainUIController.setDatabaseAddress(addressField.getText());
+		MainUIController.setUsername(nameField.getText());
+		MainUIController.setPassword(pwField.getText());
+		
+		thisStage.close();	
+	}
+	
+	@FXML private void exitWasHit()
+	{
+		Platform.exit();
+	}
+
+	public void setStage(Stage someStage)
+	{
+		thisStage = someStage;
+	} 
+	
+	EventHandler<ActionEvent> addResourceHandler = event -> //this makes ENTER do stuff
+	{
+	    retryWasHit();
+	};
+	
+
 }

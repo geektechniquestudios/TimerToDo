@@ -1,16 +1,13 @@
 package application;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
-public class ConnectionFailedPopup 
+public class SuccessPopupController 
 {
-	private Stage thisStage;
-	
-	@FXML private JFXButton continueButton;
+	Stage thisStage;
 	
 	@FXML private void continueWasHit()
 	{
