@@ -3,7 +3,7 @@ A to-do list that uses JDBC to connect to a MySQL server and store data entered 
 
 If you'd like to see a demonstration, you can check it out [here](www.youtube.com)
 
-This project relies on a mysql database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a mysql database and table. The following is an example of a creation script that would work:
+This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a mysql database and table. The following is an example of a creation script that would work:
 
 ```
 create table list_items
@@ -19,7 +19,7 @@ create table list_items
 );
 ```
 
-I will eventually build an installer for the server that will handle most of the BS. Enjoy!
+I will eventually build and host a server to host this as a service with SSL.
 
 ![](demoImages/Demo1.png)
 ![](demoImages/Demo2.png)
