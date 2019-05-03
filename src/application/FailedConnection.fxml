@@ -61,7 +61,7 @@
    <left>
       <HBox prefHeight="253.0" prefWidth="355.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefWidth="350.0" text="The connection failed. Ensure your MySQL server is running, and that your credentials are correct." textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
+            <Label prefWidth="350.0" text="Something went wrong. Ensure your MySQL server is running, and check your credentials." textFill="WHITE" wrapText="true" BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
