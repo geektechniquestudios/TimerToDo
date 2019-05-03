@@ -26,6 +26,7 @@ I will eventually build and host a server to host this as a service with SSL.
 ![](demoImages/Demo3.png)
 ![](demoImages/Demo4.png)
 ![](demoImages/Demo5.png)
+![](demoImages/Demo6.png)
 
 
 ###### If you want to fork this repository, or you would like to edit the code, it is important for you to know that this project was made using the Eclipse IDE with Java 1.8 using [JPhoenix](https://github.com/jfoenixadmin/JFoenix) and JavaFX. You must import JFoenix if you want the code to run.
