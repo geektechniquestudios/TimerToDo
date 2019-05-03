@@ -3,7 +3,7 @@ A to-do list that uses JDBC to connect to a MySQL server and store data entered 
 
 If you'd like to see a demonstration, you can check it out [here](www.youtube.com)
 
-This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a mysql database and table. The following is an example of a creation script that would work:
+This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a MySQL database and table named appropriately . The following is an example of a creation script that would work:
 
 ```
 create table list_items
