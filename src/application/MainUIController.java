@@ -357,6 +357,12 @@ public class MainUIController implements Initializable
 		mainBorderPane.setBottom(bottomEditPane);
 		mainBorderPane.requestFocus();
 	}
+	
+	@FXML private void smallRefreshWasHit()
+	{
+		getSQLTable();
+		mainBorderPane.requestFocus();
+	}
 		
 	@FXML private void tableWasHit()
 	{
@@ -384,6 +390,7 @@ public class MainUIController implements Initializable
 			edit.setTimePicker(timeToPass);
 		}
 	}
+	
 	
 	@FXML private void markComplete()
 	{
