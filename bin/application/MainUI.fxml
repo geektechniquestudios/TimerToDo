@@ -100,6 +100,19 @@
                   <Insets top="30.0" />
                </VBox.margin>
             </JFXButton>
+            <Region VBox.vgrow="ALWAYS" />
+            <JFXButton layoutX="10.0" layoutY="240.0" maxHeight="75.0" maxWidth="75.0" minHeight="75.0" minWidth="75.0" onAction="#smallRefreshWasHit" prefHeight="75.0" prefWidth="75.0" text=" ">
+               <graphic>
+                  <ImageView pickOnBounds="true" preserveRatio="true" translateX="3.0">
+                     <effect>
+                        <Bloom />
+                     </effect>
+                     <image>
+                        <Image url="@../imageAssets/smallRefresh.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </JFXButton>
          </children>
       </VBox>
    </left>
