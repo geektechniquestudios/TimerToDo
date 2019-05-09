@@ -4,7 +4,7 @@
 
 A to-do list that uses JDBC to connect to a MySQL server and store data entered by users. Eventually, this could serve as a small company's invoice system or something along those lines, given this project's continued development. Keeping track of who does what job, the cost, and their deadlines is made easy. 
 
-This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a MySQL database and table named appropriately . The following is an example of a creation script that would work:
+This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a MySQL database and table named accordingly. The following is an example of a creation script that would work:
 
 ```
 create table list_items
@@ -20,7 +20,7 @@ create table list_items
 );
 ```
 
-I will eventually build and host a server to host this as a service with SSL.
+Check out some images of the application below.
 
 ![](demoImages/Demo1.png)
 ![](demoImages/Demo2.png)
