@@ -1,7 +1,8 @@
 # TimerToDo
-A to-do list that uses JDBC to connect to a MySQL server and store data entered by users. Eventually, this could serve as a small company's invoice system or something along those lines, given this project's continued development. Keeping track of who does what job, the cost, and their deadlines is made easy. 
 
-If you'd like to see a demonstration, you can check it out [here](www.youtube.com)
+## [Check out a video demo here](https://youtu.be/OVsIRyGBInU)
+
+A to-do list that uses JDBC to connect to a MySQL server and store data entered by users. Eventually, this could serve as a small company's invoice system or something along those lines, given this project's continued development. Keeping track of who does what job, the cost, and their deadlines is made easy. 
 
 This project relies on a MySQL database called "todolist" with a table called "list_items". As this software is obviously not consumer ready in its current state, to use this software, you must make a MySQL database and table named appropriately . The following is an example of a creation script that would work:
 
